@@ -1,11 +1,11 @@
-# jos
+# jos3
 
-jos is a pyhon package to simulate a human thermoregulation and thermal responses.
+jos3 is a pyhon package to simulate a human thermoregulation and thermal responses.
 
 Please cite us if you use this package : Y. Takahashi, A. Nomoto, S. Yoda, R. Hisayama, M. Ogata, Y. Ozeki, S. Tanabe,Thermoregulation Model JOS-3 with New Open Source Code, Energy & Buildings (2020), doi: https://doi.org/10.1016/j.enbuild.2020.110575
 
 # Requirement
-
+ 
 * python 3
 * numpy
 
