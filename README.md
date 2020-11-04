@@ -1,6 +1,8 @@
-# jos3
+# JOS-3
 
-jos3 is a pyhon package to simulate a human thermoregulation and thermal responses.
+JOS-3 is a pyhon package to simulate a human thermoregulation and thermal responses.
+
+The model has been derived from 65MN https://doi.org/10.1016/S0378-7788(02)00014-2 and JOS-2 https://doi.org/10.1016/j.buildenv.2013.04.013 model.
 
 Please cite us if you use this package : Y. Takahashi, A. Nomoto, S. Yoda, R. Hisayama, M. Ogata, Y. Ozeki, S. Tanabe,Thermoregulation Model JOS-3 with New Open Source Code, Energy & Buildings (2020), doi: https://doi.org/10.1016/j.enbuild.2020.110575
 
