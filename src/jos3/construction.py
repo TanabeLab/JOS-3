@@ -7,7 +7,7 @@ try:
 # Import from absolute path
 # These codes are for debugging
 except ImportError:
-    from jos.matrix import NUM_NODES, IDICT, BODY_NAMES
+    from jos3.matrix import NUM_NODES, IDICT, BODY_NAMES
 
 
 _BSAst = np.array([

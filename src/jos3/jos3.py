@@ -15,15 +15,15 @@ try:
 # Import from absolute path
 # These codes are for debugging
 except ImportError:
-    from jos import thermoregulation as threg
-    from jos import matrix
-    from jos.matrix import NUM_NODES, INDEX, VINDEX, BODY_NAMES
-    from jos.comfmod import preferred_temp
-    from jos import construction as cons
-    from jos.construction import _BSAst
+    from jos3 import thermoregulation as threg
+    from jos3 import matrix
+    from jos3.matrix import NUM_NODES, INDEX, VINDEX, BODY_NAMES
+    from jos3.comfmod import preferred_temp
+    from jos3 import construction as cons
+    from jos3.construction import _BSAst
 
 
-class JOS():
+class JOS3():
     def __init__(
             self,
             height=1.72,
@@ -612,7 +612,7 @@ class JOS():
 
         Returns
         -------
-        (83,) np.ndarray
+        array
             Current extra heat gain of model.
         """
         self.ex_q[INDEX[tissue]] = value
@@ -819,76 +819,3 @@ def _to17array(inp):
     except:
         array = np.ones(17)*inp
     return array.copy()
-
-
-if __name__ == "__main__":
-    mod = JOS()
-    print("\nNeutral")
-    print("TcrHead: {:.3f} [oC]".format(mod.Tcr[0]))
-    print("TskMean: {:.3f} [oC]".format(mod.TskMean))
-
-    mod = JOS()
-    mod.PAR = 2
-    mod.To = 40
-    mod.RH = 70
-    mod.Va = 2
-    mod.Icl = 0.6
-    mod.simulate(60)
-    print("\nAfter Hot Exposure")
-    print("TcrHead: {:.3f} [oC]".format(mod.Tcr[0]))
-    print("TskMean: {:.3f} [oC]".format(mod.TskMean))
-
-    mod = JOS()
-    mod.PAR = 1.2
-    mod.To = 10
-    mod.RH = 20
-    mod.Va = 3
-    mod.Icl = 0.1
-    mod.simulate(60)
-    print("\nAfter Cold Exposure")
-    print("TcrHead: {:.3f} [oC]".format(mod.Tcr[0]))
-    print("TskMean: {:.3f} [oC]".format(mod.TskMean))
-
-    # Measure calculation time
-    import time
-    stime = time.time()
-    mod = JOS()
-    mod.To = 30
-    mod.simulate(60)
-    mod.To = 20
-    mod.simulate(60)
-    mod.To = 40
-    mod.simulate(60)
-    mod.To = 10
-    mod.simulate(60)
-    etime = time.time()
-    print("Default output")
-    print("Calculation time {:.2f} [sec]".format(etime-stime))
-
-    stime = time.time()
-    mod = JOS(ex_output=["BFsk", "BFcr", "Emax"])
-    mod.To = 30
-    mod.simulate(60)
-    mod.To = 20
-    mod.simulate(60)
-    mod.To = 40
-    mod.simulate(60)
-    mod.To = 10
-    mod.simulate(60)
-    etime = time.time()
-    print("Extra output")
-    print("Calculation time {:.2f} [sec]".format(etime-stime))
-
-    stime = time.time()
-    mod = JOS(ex_output="all")
-    mod.To = 30
-    mod.simulate(60)
-    mod.To = 20
-    mod.simulate(60)
-    mod.To = 40
-    mod.simulate(60)
-    mod.To = 10
-    mod.simulate(60)
-    etime = time.time()
-    print("All output")
-    print("Calculation time {:.2f} [sec]".format(etime-stime))
