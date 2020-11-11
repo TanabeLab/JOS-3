@@ -15,8 +15,10 @@ except IOError:
 here = os.path.dirname(os.path.abspath(__file__))
 initpath = os.path.join(here, "src", 'jos3', '__init__.py')
 
-version = next((line.split('=')[1].strip().replace("'", '')
-    for line in open(initpath)))
+for line in open(initpath):
+    if "version" in line:
+        line = line.split('=')[1].strip().replace('"', "").replace("'", "")
+version = line
 
 setup(
     name="jos3",
