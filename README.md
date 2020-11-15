@@ -16,6 +16,8 @@ Please cite us if you use this package : Y. Takahashi, A. Nomoto, S. Yoda, R. Hi
 # Installation
 
 ```bash
+pip install jos3
+or
 pip install git+https://github.com/TanabeLab/JOS-3.git
 ```
 
