@@ -1,6 +1,8 @@
 # JOS-3
 
-JOS-3 is a pyhon package to simulate a human thermoregulation and thermal responses.
+JOS-3 is a model to simulate a human thermoregulation.
+
+Its python package name is "jos3".
 
 The model has been derived from 65MN https://doi.org/10.1016/S0378-7788(02)00014-2 and JOS-2 https://doi.org/10.1016/j.buildenv.2013.04.013 model.
 
@@ -14,7 +16,7 @@ Please cite us if you use this package : Y. Takahashi, A. Nomoto, S. Yoda, R. Hi
 # Installation
 
 ```bash
-pip install jos ??
+pip install git+https://github.com/TanabeLab/JOS-3.git
 ```
 
 # Usage
@@ -22,9 +24,9 @@ pip install jos ??
 ```python
 
 import pandas as pd
-import jos
+import jos3
 
-model = jos.JOS(height=1.7, weight=60, age=30)  # Builds a model
+model = jos3.JOS3(height=1.7, weight=60, age=30)  # Builds a model
 
 # Set the first condition
 model.To = 28  # Operative temperature [oC]
@@ -41,13 +43,13 @@ df = pd.DataFrame(model.dict_results())  # Make pandas.DataFrame
 df.TskMean.plot()  # Show the graph of mean skin temp.
 ```
 
-![result](https://raw.githubusercontent.com/TanabeLab/jos3/tree/develop/example/ex_result.png)
+![result](example/ex_result.png)
 
 # Author
 
 * Yoshito Takahashi
-* Former master student of Tanabe Laboratory, Waseda University
+* Master's level graduate [Tanabe Laboratory, Waseda University](https://www.tanabe.arch.waseda.ac.jp/en/)
 * takahashiyoshito64@gmail.com
 
 # License
-jos is under [MIT license](https://en.wikipedia.org/wiki/MIT_License).
+jos3 is under [MIT license](https://en.wikipedia.org/wiki/MIT_License).
