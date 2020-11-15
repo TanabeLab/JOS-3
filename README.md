@@ -45,7 +45,7 @@ df = pd.DataFrame(model.dict_results())  # Make pandas.DataFrame
 df.TskMean.plot()  # Show the graph of mean skin temp.
 ```
 
-![result](example/ex_result.png)
+![result](https://github.com/TanabeLab/JOS-3/blob/master/example/ex_result.png)
 
 # Author
 
