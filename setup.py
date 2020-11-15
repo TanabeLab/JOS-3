@@ -28,13 +28,14 @@ for line in open(initpath):
 version = line
 
 setup(
-    name="jos3",
+    name="jos3-yoshito-takahashi",
     version=version,
     url='https://github.com/TanabeLab/JOS-3',
     author='Yoshito Takahashi',
     author_email='takahashiyoshito64@gmail.com',
     description='Joint-thermoregulation system, JOS-3',
     long_description=readme,
+    long_description_content_type='text/markdown',
     packages=find_packages("src"),
     package_dir={'': "src"},
     install_requires=requirements,
