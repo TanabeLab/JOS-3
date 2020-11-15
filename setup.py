@@ -11,13 +11,6 @@ try:
 except IOError:
     readme = ''
 
-try:
-    with open("requirements.txt") as f:
-        requirements = f.read().splitlines()
-except:
-    requirements = ["numpy"]
-
-
 # version
 here = os.path.dirname(os.path.abspath(__file__))
 initpath = os.path.join(here, "src", 'jos3', '__init__.py')
@@ -28,7 +21,7 @@ for line in open(initpath):
 version = line
 
 setup(
-    name="jos3-yoshito-takahashi",
+    name="jos3",
     version=version,
     url='https://github.com/TanabeLab/JOS-3',
     author='Yoshito Takahashi',
@@ -38,7 +31,7 @@ setup(
     long_description_content_type='text/markdown',
     packages=find_packages("src"),
     package_dir={'': "src"},
-    install_requires=requirements,
+    install_requires=["numpy"],
     license="MIT",
     classifiers=[
         'Operating System :: OS Independent',
