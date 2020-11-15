@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import pandas as pd
-import jos
+import jos3
 
-model = jos.JOS(height=1.7, weight=60, age=30)  # Builds a model
+model = jos3.JOS3(height=1.7, weight=60, age=30)  # Builds a model
 
 # Set the first condition
 model.To = 28  # Operative temperature [oC]
@@ -12,7 +12,7 @@ model.PAR = 1.2  # Physical activity ratio [-]
 model.simulate(60)  # Exposre time = 60 [min]
 
 # Set the next condition
-model.To = 20  # Change only operative temperature
+model.To = 20  # Changes only operative temperature
 model.simulate(60)  # Additional exposre time = 60 [min]
 
 df = pd.DataFrame(model.dict_results())  # Make pandas.DataFrame
