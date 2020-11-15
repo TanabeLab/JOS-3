@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: jos3-yoshito-takahashi
-Version: 0.0.0
+Version: 0.0.2
 Summary: Joint-thermoregulation system, JOS-3
 Home-page: https://github.com/TanabeLab/JOS-3
 Author: Yoshito Takahashi
@@ -25,7 +25,9 @@ Description: # JOS-3
         
         ```bash
         pip install jos3
+        
         or
+        
         pip install git+https://github.com/TanabeLab/JOS-3.git
         ```
         
@@ -53,7 +55,7 @@ Description: # JOS-3
         df.TskMean.plot()  # Show the graph of mean skin temp.
         ```
         
-        ![result](example/ex_result.png)
+        ![result](https://github.com/TanabeLab/JOS-3/blob/master/example/ex_result.png)
         
         # Author
         

@@ -17,7 +17,9 @@ Please cite us if you use this package : Y. Takahashi, A. Nomoto, S. Yoda, R. Hi
 
 ```bash
 pip install jos3
+
 or
+
 pip install git+https://github.com/TanabeLab/JOS-3.git
 ```
 
@@ -45,7 +47,7 @@ df = pd.DataFrame(model.dict_results())  # Make pandas.DataFrame
 df.TskMean.plot()  # Show the graph of mean skin temp.
 ```
 
-![result](https://github.com/TanabeLab/JOS-3/blob/master/example/ex_result.png)
+![result](https://raw.githubusercontent.com/TanabeLab/JOS-3/blob/master/example/ex_result.png)
 
 # Author
 
