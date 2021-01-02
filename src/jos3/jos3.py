@@ -254,10 +254,13 @@ class JOS3():
             bf_ava_foot = 0
 
         # Thermogenesis by shivering [W]
-        mshiv = threg.shivering(
+        if self.options["shivering_thermogenesis"]:
+            mshiv = threg.shivering(
                 err_cr, err_sk, tcr, tsk,
                 self._height, self._weight, self._bsa_equation, self._age, self._sex, dtime,
                 self.options,)
+        else: # not considering thermogenesis by shivering
+            mshiv = np.zeros(17)
 
         # Thermogenesis by non-shivering [W]
         if self.options["nonshivering_thermogenesis"]:
