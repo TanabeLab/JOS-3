@@ -470,9 +470,9 @@ def ava_bloodflow(err_cr, err_sk,
     bf_ava_foot = 2.16 * bfbr * sig_ava_foot  # Foot
     return bf_ava_hand, bf_ava_foot
 
-
+#Nomoto editここ間違えてるかも
 def basal_met(height=1.72, weight=74.43, age=20,
-            sex="male", equation="harris-benedict"):
+            sex="male", equation="harris-benedict", tcr=37):
     """
     Calculate basal metabolic rate [W].
 
@@ -488,6 +488,8 @@ def basal_met(height=1.72, weight=74.43, age=20,
         Choose male or female. The default is "male".
     equation : str, optional
         Choose harris-benedict or ganpule. The default is "harris-benedict".
+    tcr : array
+        Core and skin temperatures [oC].
 
     Returns
     -------
@@ -517,6 +519,11 @@ def basal_met(height=1.72, weight=74.43, age=20,
         bmr *= 1000 / 4.186
 
     bmr *= 0.048  # [kcal/day] to [W]
+
+    if tcr[0] > 28:
+        bmr *= 2**((tcr[0]-28)/10) 
+    else:
+        bmr
 
     return bmr
 
@@ -600,7 +607,7 @@ def local_mwork(bmr, par):
 
 PRE_SHIV = 0
 def shivering(err_cr, err_sk, tcr, tsk,
-              height=1.72, weight=74.43, equation="dubois", age=20, sex="male", dtime=60,
+              height=1.72, weight=74.43, equation="dubois", age=20, sex="male", dtime=60, 
               options={}):
     """
     Calculate local metabolic rate by shivering [W].
@@ -624,6 +631,8 @@ def shivering(err_cr, err_sk, tcr, tsk,
         Choose male or female. The default is "male".
     dtime : float, optional
         Interval of analysis time. The default is 60.
+    times : int
+        Number of loops of a simulation
 
     Returns
     -------
@@ -689,7 +698,32 @@ def shivering(err_cr, err_sk, tcr, tsk,
 
     bsar = cons.bsa_rate(height, weight, equation)
     mshiv = shivf * bsar * sd_shiv * sig_shiv
+    
+    #--------------------------------------------------------------------------
+    # edit by Akihisa Nomoto(2021/02/07)
+    #--------------------------------------------------------------------------
+    
+    # Upper limit of shivering (Iampietro, 1960)
+    mshiv_max = 5 * bsar
+    if mshiv >= 5 * bsar:
+        mshiv = mshiv_max
+    else:
+        mshiv
+    
+    # Weaken shivering command when the core temp. is under 32 oC 
+    #(linear decrease assuemed by Timbal et al., 1976)  
+    if tcr[0]<32:
+        x = 2 * (tcr[0]-32)**1.4
+        mshiv *= 2 / (math.exp(x) + math.exp(-x))
+    else:
+        mshiv = mshiv
+    
+    # Endurance time of shivering in reration to shivering intensity (Wissler, 1985)
+    #Lr = mshiv / mshiv_max # ralative effort of shivering
+    #t_end = 18 / Lr * math.exp(-4*Lr)
+    
     return mshiv
+
 
 shivering
 def nonshivering(err_cr, err_sk,
