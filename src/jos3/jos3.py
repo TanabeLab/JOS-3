@@ -23,7 +23,171 @@ except ImportError:
     from jos3.construction import _BSAst
 
 
+__OUT_PARAM_DOCS = """
+    Output parameters
+    ----------
+    "CycleTime"     : The times to excute the funciton "_run" [-]
+    "ModTime"       : Simulation times [sec]
+    "dt"            : Time delta of the model [sec]
+    "TskMean"       : Mean skin temperature of the body [oC]
+    "Tsk"+BODYNAME  : Skin temperature of BODYNAME [oC]
+    "Tcr+BODYNAME   : Core temperature of BODYNAME [oC]
+    "WetMean"       : Mean skin wettedness of the body [-]
+    "Wet"           : Local skin wettedness of the body [-]
+    "Wle"           : Weight loss rate by the evaporation and respiration of the whole body [g/sec]
+    "CO"            : Cardiac output (the sum of the whole blood flow) [L/h]
+    "Met"           : Total heat production of the whole body [W]
+    "RES"           : Heat loss by the respiration [W]
+    "THLsk"+BODYNAME : Heat loss from the skin of BODYNAME [W]
+    """
+
+__EXOUT_PARAM_DOCS = """
+    Extra output parameters
+    ----------
+    "Name"          : Name of the model [-]
+    "Height"        : Body heigh [m]
+    "Weight"        : Body weight [kg]
+    "BSA"+BODYNAME  : Body surface area of BODYNAME[m2]
+    "Fat"           : Body fat rate [%]
+    "Sex"           : Male or female [-]
+    "Age"           : Age [years]
+    "Setptcr"+BODYNAME : Set point skin temperatre of BODYNAME [oC]
+    "Setptsk"+BODYNAME : Set point core temperatre of BODYNAME [oC]
+    "Tcb" : Central blood temperature [oC]
+    "Tar"+BODYNAME  : Arterial temperature of BODYNAME [oC]
+    "Tve"+BODYNAME  : Vein temperature of BODYNAME [oC]
+    "Tsve"+BODYNAME : Superfical vein temperature of BODYNAME [oC]
+    "Tms"+BODYNAME  : Muscle temperature as BODYNAME [oC]
+    "Tfat"+BODYNAME : Fat temperature of BODYNAME [oC]
+    "To"+BODYANAME  : Operative temperature of BODYNAME [oC]
+    "Rt"+BODYNAME   : Total heat resistance of BODYNAME [m2.K/W]
+    "Ret"+BODYNAME  : Total evaporative heat resistance of BODYNAME [m2.kPa/W]
+    "Ta"+BODYNAME   : Air temperature of BODYNAME [oC]
+    "Tr"+BODYNAME   : Mean radiant temperature of BODYNAME [oC]
+    "RH"+BODYNAME   : Relative humidity of BODYNAME [%]
+    "Va"+BODYNAME   : Air velocity of BODYNAME [m/s]
+    "PAR"           : Physical activity ratio [-]
+    "Icl"+BODYNAME  : Clothing insulation value of BODYNAME [clo]
+    "Esk"+BODYNAME  : Evaporative heat loss at the skin of BODYNAME [W]
+    "Emax"+BODYNAME : Maximum evaporative heat loss at the skin of BODYNAME [W]
+    "Esweat"+BODYNAME : Evaporative heat loss at the skin by only sweating of BODYNAME [W]
+    "BFcr"+BODYNAME : Core blood flow rate of BODYNAME [L/h]
+    "BFms"+BODYNAME : Muscle blood flow rate of BODYNAME [L/h]
+    "BFfat"+BODYNAME : Fat blood flow rate of BODYNAME [L/h]
+    "BFsk"+BODYNAME : Skin blood flow rate of BODYNAME [L/h]
+    "BFava_hand"    : AVA blood flow rate of one hand [L/h]
+    "BFava_foot"    : AVA blood flow rate of one foot [L/h]
+    "Mbasecr"+BODYNAME : Core heat production by basal metaborism of BODYNAME [W]
+    "Mbasems"+BODYNAME : Muscle heat production by basal metaborism of BODYNAME [W]
+    "Mbasefat"+BODYNAME : Fat heat production by basal metaborism of BODYNAME [W]
+    "Mbasesk"+BODYNAME : Skin heat production by basal metaborism of BODYNAME [W]
+    "Mwork"+BODYNAME : Core or muscle heat production by work of BODYNAME [W]
+    "Mshiv"+BODYNAME : Core or muscle heat production by shivering of BODYNAME [W]
+    "Mnst"+BODYNAME : Core heat production by non-shivering of BODYNAME [W]
+    "Qcr"+BODYNAME  : Core total heat production of BODYNAME [W]
+    "Qms"+BODYNAME  : Muscle total heat production of BODYNAME [W]
+    "Qfat"+BODYNAME : Fat total heat production of BODYNAME [W]
+    "Qsk"+BODYNAME  : Skin total heat production of BODYNAME [W]
+    "SHLsk"+BODYNAME : Sensible heat loss at the skin of BODYNAME [W]
+    "LHLsk"+BODYNAME : Latent heat loss at the skin of BODYNAME [W]
+    "RESsh"+BODYNAME : Sensible heat loss by respiration of BODYNAME [W]
+    "RESlh"+BODYNAME : Latent heat loss by respiration of BODYNAME [W]
+    """
+
+
 class JOS3():
+    """
+    JOS-3 is a numeric model to simulate a human thermoregulation.
+    You can see all the system of the model from following journal.
+
+    Y.Takahashi, A.Nomoto, S.Yoda, R.Hisayama, M.Ogata, Y.Ozeki, S.Tanabe,
+    Thermoregulation Model JOS-3 with New Open Source Code, Energy & Buildings (2020),
+    doi: https://doi.org/10.1016/j.enbuild.2020.110575
+
+
+    Parameters
+    ----------
+    height : float, optional
+        Body height [m]. The default is 1.72.
+    weight : float, optional
+        Body weight [kg]. The default is 74.43.
+    fat : float, optional
+        Fat rte [%]. The default is 15.
+    age : int, optional
+        Age [years]. The default is 20.
+    sex : str, optional
+        Sex ("male" or "female"). The default is "male".
+    ci : float, optional
+        Cardiac index [L/min/m2]. The default is 2.6432.
+    bmr_equation : str, optional
+        Choose a BMR equation. The default is "harris-benedict".
+    bsa_equation : str, optional
+        Choose a BSA equation.
+        You can choose
+        The default is "dubois".
+    ex_output : None, list or "all", optional
+        If you want to get extra output parameters, set the parameters as the list format.
+        If ex_output is "all", all parameters are output.
+        The default is None.
+
+    Setter
+    ----------
+    Input parameters of environmental conditions are set as the Setter format.
+    If you set the different conditons in each body parts, set the list.
+    List input must be 17 lengths and means the input of "Head", "Neck", "Chest",
+    "Back", "Pelvis", "LShoulder", "LArm", "LHand", "RShoulder", "RArm",
+    "RHand", "LThigh", "LLeg", "LFoot", "RThigh", "RLeg" and "RFoot".
+
+    Ta : float or list
+        Air temperature [oC].
+    Tr : float or list
+        Mean radiant temperature [oC].
+    Va : float or list
+        Air velocity [m/s].
+    RH : float or list
+        Relative humidity [%].
+    Icl : float or list
+        Clothing insulation [clo].
+    PAR : float
+        Physical activity ratio [-].
+
+
+    Examples
+    -------
+
+    Buliding a model:
+
+    >>> import jos3
+    >>> model = jos3.JOS3(height=1.7, weight=60, age=30)
+
+    Setting the first phase:
+
+    >>> model.To = 28  # Operative temperature [oC]
+    >>> model.RH = 40  # Relative humidity [%]
+    >>> model.Va = 0.2  # Air velocity [m/s]
+    >>> model.PAR = 1.2  # Physical activity ratio [-]
+    >>> model.posture = "sitting"  # Set the posture
+    >>> model.simulate(60)  # Exposre time = 60 [min]
+
+    Setting the next phase:
+
+    >>> model.To = 20  # Changing only operative temperature
+    >>> model.simulate(60)  # Additional exposre time = 60 [min]
+
+
+    Showing the results:
+
+    >>> import pandas as pd
+    >>> df = pd.DataFrame(model.dict_results())  # Making pandas.DataFrame
+    >>> df.TskMean.plot()  # Showing the graph of mean skin temp.
+
+    Exporting the results as csv:
+
+    >>> model.to_csv(folder="C:/Users/takahashi/Desktop")
+
+    """
+
+
     def __init__(
             self,
             height=1.72,
@@ -36,34 +200,6 @@ class JOS3():
             bsa_equation="dubois",
             ex_output=None,
             ):
-        """
-        Parameters
-        ----------
-        height : float, optional
-            Body height [m]. The default is 1.72.
-        weight : float, optional
-            Body weight [kg]. The default is 74.43.
-        fat : float, optional
-            Fat rte [%]. The default is 15.
-        age : int, optional
-            Age [years]. The default is 20.
-        sex : str, optional
-            Sex ("male" or "female"). The default is "male".
-        ci : float, optional
-            Cardiac index [L/min/m2]. The default is 2.6432.
-        bmr_equation : str, optional
-            Choose a BMR equation. The default is "harris-benedict".
-        bsa_equation : str, optional
-            Choose a BSA equation. The default is "dubois".
-        ex_output : None, list or "all", optional
-            Extra output parameters. If "all", all parameters are output.
-            The default is None.
-
-        Returns
-        -------
-        None.
-        """
-
 
         self._height = height
         self._weight = weight
@@ -161,7 +297,7 @@ class JOS3():
 
     def simulate(self, times, dtime=60, output=True):
         """
-        Execute JOS3 model.
+        Execute JOS-3 model.
 
         Parameters
         ----------
@@ -217,7 +353,7 @@ class JOS3():
         if self._hr is not None:
             hr = self._hr
 
-        # Operarive temp. [oC], heat and evaporative heat resistance [K/W], [kPa/W]
+        # Operarive temp. [oC], heat and evaporative heat resistance [m2.K/W], [m2.kPa/W]
         to = threg.operative_temp(self._ta, self._tr, hc, hr,)
         r_t = threg.dry_r(hc, hr, self._clo)
         r_et = threg.wet_r(hc, self._clo, self._iclo)
@@ -239,7 +375,7 @@ class JOS3():
         # Skinwettedness [-], Esk, Emax, Esw [W]
         wet, e_sk, e_max, e_sweat = threg.evaporation(
                 err_cr, err_sk, tsk,
-                self._ta, self._rh, r_et, 
+                self._ta, self._rh, r_et,
                 self._height, self._weight, self._bsa_equation, self._age)
 
         # Skin blood flow, basal skin blood flow [L/h]
@@ -262,7 +398,7 @@ class JOS3():
         # Thermogenesis by non-shivering [W]
         if self.options["nonshivering_thermogenesis"]:
             mnst = threg.nonshivering(err_cr, err_sk,
-                self._height, self._weight, self._bsa_equation, self._age, 
+                self._height, self._weight, self._bsa_equation, self._age,
                 self.options["cold_acclimated"], self.options["bat_positive"])
         else: # not consider NST
             mnst = np.zeros(17)
@@ -393,7 +529,6 @@ class JOS3():
             dictout["Wle"] = (wlesk.sum() + wleres)
             dictout["CO"] = co
             dictout["Met"] = qall
-            dictout["Met"] = qall
             dictout["RES"] = res_sh + res_lh
             dictout["THLsk"] = shlsk + e_sk
 
@@ -408,7 +543,7 @@ class JOS3():
             detailout["Sex"] = self._sex
             detailout["Age"] = self._age
             detailout["Setptcr"] = setpt_cr
-            detailout["Setptcr"] = setpt_sk
+            detailout["Setptsk"] = setpt_sk
             detailout["Tcb"] = self.Tcb
             detailout["Tar"] = self.Tar
             detailout["Tve"] = self.Tve
@@ -460,6 +595,7 @@ class JOS3():
         return dictout
 
 
+
     def dict_results(self):
         """
         Get results as pandas.DataFrame format.
@@ -504,7 +640,7 @@ class JOS3():
             except TypeError:  # if the value is not iter.
                 keys= [key]  # convert to iter
             key2keys.update({key: keys})
-        
+
         data = []
         for i, dictout in enumerate(self._history):
             row = {}
@@ -516,7 +652,7 @@ class JOS3():
                     values = value
                 row.update(dict(zip(keys, values)))
             data.append(row)
-            
+
         outdict = dict(zip(data[0].keys(), [[] for i in range(len(data[0].keys()))]))
         for row in data:
             for k in data[0].keys():
@@ -598,7 +734,7 @@ class JOS3():
     #--------------------------------------------------------------------------
     # Setter
     #--------------------------------------------------------------------------
-    def set_ex_q(self, tissue, value):
+    def _set_ex_q(self, tissue, value):
         """
         Set extra heat gain by tissue name.
 
@@ -613,7 +749,7 @@ class JOS3():
         Returns
         -------
         array
-            Current extra heat gain of model.
+            Extra heat gain of model.
         """
         self.ex_q[INDEX[tissue]] = value
         return self.ex_q
@@ -732,13 +868,13 @@ class JOS3():
         wet, *_ = threg.evaporation(err_cr, err_sk,
                 self._ta, self._rh, self.Ret, self._bsa_rate, self._age)
         return wet
-    
+
     @property
     def WetMean(self):
         wet = self.Wet
         return np.average(wet, weights=_BSAst)
 
-    
+
 
     @property
     def TskMean(self):
@@ -796,7 +932,10 @@ class JOS3():
                 self._height, self._weight, self._age,
                 self._sex, self._bmr_equation,)
         return bmr
-    
+
+JOS3.__doc__ = JOS3.__doc__ + __OUT_PARAM_DOCS + __EXOUT_PARAM_DOCS
+
+
 def _to17array(inp):
     """
     Make ndarray (17,).
@@ -819,3 +958,4 @@ def _to17array(inp):
     except:
         array = np.ones(17)*inp
     return array.copy()
+
