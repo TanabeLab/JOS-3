@@ -23,7 +23,7 @@ except ImportError:
     from jos3.construction import _BSAst
 
 
-__OUT_PARAM_DOCS = """
+OUT_PARAMS = """
     Output parameters
     ----------
     "CycleTime"     : The times to excute the funciton "_run" [-]
@@ -41,7 +41,7 @@ __OUT_PARAM_DOCS = """
     "THLsk"+BODYNAME : Heat loss from the skin of BODYNAME [W]
     """
 
-__EXOUT_PARAM_DOCS = """
+EXOUT_PARAMS = """
     Extra output parameters
     ----------
     "Name"          : Name of the model [-]
@@ -94,7 +94,23 @@ __EXOUT_PARAM_DOCS = """
     "RESlh"+BODYNAME : Latent heat loss by respiration of BODYNAME [W]
     """
 
+def __add_docsting(*args):
+    """
+    Decorator to add docsting in the function
 
+    Parameters
+    ----------
+    *args : str
+        Docstriong of the function.
+    """
+    def wrapper(func):
+        for arg in args:
+            func.__doc__ = arg + func.__doc__
+        return func
+    return wrapper
+
+
+@__add_docsting(OUT_PARAMS, EXOUT_PARAMS)
 class JOS3():
     """
     JOS-3 is a numeric model to simulate a human thermoregulation.
@@ -932,8 +948,6 @@ class JOS3():
                 self._height, self._weight, self._age,
                 self._sex, self._bmr_equation,)
         return bmr
-
-JOS3.__doc__ = JOS3.__doc__ + __OUT_PARAM_DOCS + __EXOUT_PARAM_DOCS
 
 
 def _to17array(inp):
