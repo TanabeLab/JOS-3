@@ -8,109 +8,23 @@ import numpy as np
 try:
     from . import thermoregulation as threg
     from . import matrix
-    from .matrix import NUM_NODES, INDEX, VINDEX, BODY_NAMES
+    from .matrix import NUM_NODES, INDEX, VINDEX, BODY_NAMES, remove_bodyname
     from .comfmod import preferred_temp
     from . import construction as cons
     from .construction import _BSAst
+    from .params import ALL_OUT_PARAMS, show_outparam_docs
 # Import from absolute path
 # These codes are for debugging
 except ImportError:
     from jos3 import thermoregulation as threg
     from jos3 import matrix
-    from jos3.matrix import NUM_NODES, INDEX, VINDEX, BODY_NAMES
+    from jos3.matrix import NUM_NODES, INDEX, VINDEX, BODY_NAMES, remove_bodyname
     from jos3.comfmod import preferred_temp
     from jos3 import construction as cons
     from jos3.construction import _BSAst
+    from jos3.params import ALL_OUT_PARAMS, show_outparam_docs
 
 
-OUT_PARAMS = """
-    Output parameters
-    ----------
-    "CycleTime"     : The times to excute the funciton "_run" [-]
-    "ModTime"       : Simulation times [sec]
-    "dt"            : Time delta of the model [sec]
-    "TskMean"       : Mean skin temperature of the body [oC]
-    "Tsk"+BODYNAME  : Skin temperature of BODYNAME [oC]
-    "Tcr+BODYNAME   : Core temperature of BODYNAME [oC]
-    "WetMean"       : Mean skin wettedness of the body [-]
-    "Wet"           : Local skin wettedness of the body [-]
-    "Wle"           : Weight loss rate by the evaporation and respiration of the whole body [g/sec]
-    "CO"            : Cardiac output (the sum of the whole blood flow) [L/h]
-    "Met"           : Total heat production of the whole body [W]
-    "RES"           : Heat loss by the respiration [W]
-    "THLsk"+BODYNAME : Heat loss from the skin of BODYNAME [W]
-    """
-
-EXOUT_PARAMS = """
-    Extra output parameters
-    ----------
-    "Name"          : Name of the model [-]
-    "Height"        : Body heigh [m]
-    "Weight"        : Body weight [kg]
-    "BSA"+BODYNAME  : Body surface area of BODYNAME[m2]
-    "Fat"           : Body fat rate [%]
-    "Sex"           : Male or female [-]
-    "Age"           : Age [years]
-    "Setptcr"+BODYNAME : Set point skin temperatre of BODYNAME [oC]
-    "Setptsk"+BODYNAME : Set point core temperatre of BODYNAME [oC]
-    "Tcb" : Central blood temperature [oC]
-    "Tar"+BODYNAME  : Arterial temperature of BODYNAME [oC]
-    "Tve"+BODYNAME  : Vein temperature of BODYNAME [oC]
-    "Tsve"+BODYNAME : Superfical vein temperature of BODYNAME [oC]
-    "Tms"+BODYNAME  : Muscle temperature as BODYNAME [oC]
-    "Tfat"+BODYNAME : Fat temperature of BODYNAME [oC]
-    "To"+BODYANAME  : Operative temperature of BODYNAME [oC]
-    "Rt"+BODYNAME   : Total heat resistance of BODYNAME [m2.K/W]
-    "Ret"+BODYNAME  : Total evaporative heat resistance of BODYNAME [m2.kPa/W]
-    "Ta"+BODYNAME   : Air temperature of BODYNAME [oC]
-    "Tr"+BODYNAME   : Mean radiant temperature of BODYNAME [oC]
-    "RH"+BODYNAME   : Relative humidity of BODYNAME [%]
-    "Va"+BODYNAME   : Air velocity of BODYNAME [m/s]
-    "PAR"           : Physical activity ratio [-]
-    "Icl"+BODYNAME  : Clothing insulation value of BODYNAME [clo]
-    "Esk"+BODYNAME  : Evaporative heat loss at the skin of BODYNAME [W]
-    "Emax"+BODYNAME : Maximum evaporative heat loss at the skin of BODYNAME [W]
-    "Esweat"+BODYNAME : Evaporative heat loss at the skin by only sweating of BODYNAME [W]
-    "BFcr"+BODYNAME : Core blood flow rate of BODYNAME [L/h]
-    "BFms"+BODYNAME : Muscle blood flow rate of BODYNAME [L/h]
-    "BFfat"+BODYNAME : Fat blood flow rate of BODYNAME [L/h]
-    "BFsk"+BODYNAME : Skin blood flow rate of BODYNAME [L/h]
-    "BFava_hand"    : AVA blood flow rate of one hand [L/h]
-    "BFava_foot"    : AVA blood flow rate of one foot [L/h]
-    "Mbasecr"+BODYNAME : Core heat production by basal metaborism of BODYNAME [W]
-    "Mbasems"+BODYNAME : Muscle heat production by basal metaborism of BODYNAME [W]
-    "Mbasefat"+BODYNAME : Fat heat production by basal metaborism of BODYNAME [W]
-    "Mbasesk"+BODYNAME : Skin heat production by basal metaborism of BODYNAME [W]
-    "Mwork"+BODYNAME : Core or muscle heat production by work of BODYNAME [W]
-    "Mshiv"+BODYNAME : Core or muscle heat production by shivering of BODYNAME [W]
-    "Mnst"+BODYNAME : Core heat production by non-shivering of BODYNAME [W]
-    "Qcr"+BODYNAME  : Core total heat production of BODYNAME [W]
-    "Qms"+BODYNAME  : Muscle total heat production of BODYNAME [W]
-    "Qfat"+BODYNAME : Fat total heat production of BODYNAME [W]
-    "Qsk"+BODYNAME  : Skin total heat production of BODYNAME [W]
-    "SHLsk"+BODYNAME : Sensible heat loss at the skin of BODYNAME [W]
-    "LHLsk"+BODYNAME : Latent heat loss at the skin of BODYNAME [W]
-    "RESsh"+BODYNAME : Sensible heat loss by respiration of BODYNAME [W]
-    "RESlh"+BODYNAME : Latent heat loss by respiration of BODYNAME [W]
-    """
-
-def __add_docsting(*args):
-    """
-    Decorator to add docsting in the function
-
-    Parameters
-    ----------
-    *args : str
-        Docstriong of the function.
-    """
-    def wrapper(func):
-        for arg in args:
-            func.__doc__ = arg + func.__doc__
-        return func
-    return wrapper
-
-
-@__add_docsting(OUT_PARAMS, EXOUT_PARAMS)
 class JOS3():
     """
     JOS-3 is a numeric model to simulate a human thermoregulation.
@@ -122,7 +36,7 @@ class JOS3():
 
 
     Parameters
-    ----------
+    -------
     height : float, optional
         Body height [m]. The default is 1.72.
     weight : float, optional
@@ -146,8 +60,9 @@ class JOS3():
         If ex_output is "all", all parameters are output.
         The default is None.
 
+
     Setter
-    ----------
+    -------
     Input parameters of environmental conditions are set as the Setter format.
     If you set the different conditons in each body parts, set the list.
     List input must be 17 lengths and means the input of "Head", "Neck", "Chest",
@@ -166,6 +81,8 @@ class JOS3():
         Clothing insulation [clo].
     PAR : float
         Physical activity ratio [-].
+        This equals the ratio of metaboric rate to basal metablic rate.
+        PAR of sitting quietly is 1.2.
 
 
     Examples
@@ -201,6 +118,10 @@ class JOS3():
 
     >>> model.to_csv(folder="C:/Users/takahashi/Desktop")
 
+    Showing the documentaion of the output parameters
+
+    >>> docs = jos3.show_outparam_docs()
+    >>> print(docs)
     """
 
 
@@ -289,7 +210,7 @@ class JOS3():
         Parameters of JOS-3 : dict
         """
         # Set operative temperature under PMV=0 environment
-        # Metabolic rate at PAR = 1.25
+        # PAR = 1.25
         # 1 met = 58.15 W/m2
         met = self.BMR * 1.25 / 58.15 / self.BSA.sum() # [met]
         self.To = preferred_temp(met=met)
@@ -611,7 +532,6 @@ class JOS3():
         return dictout
 
 
-
     def dict_results(self):
         """
         Get results as pandas.DataFrame format.
@@ -676,10 +596,9 @@ class JOS3():
         return outdict
 
 
-    def to_csv(self, path=None, folder=None, unit=True):
+    def to_csv(self, path=None, folder=None, unit=True, meanig=True):
         """
-        Export results with "units" as csv format.
-        If you want to know units of parametes, use this method.
+        Export results as csv format.
 
         Parameters
         ----------
@@ -690,7 +609,9 @@ class JOS3():
             Output folder. If you use the default file name, set a only folder path.
             The default is None.
         unit : bool, optional
-            Writes unit in csv file. The default is True.
+            Writes units in csv file. The default is True.
+        meaning : bool, optional
+            Writes meanings of the parameters in csv file. The default is True.
         """
         if path is None:
             nowtime = dt.datetime.now().strftime("%Y%m%d-%H%M%S")
@@ -704,42 +625,27 @@ class JOS3():
 
         columns = [k for k in dictout.keys()]
         units = []
+        meanigs = []
         for col in columns:
-            if "RES" in col[:3]:
-                units.append("[W]")
-            elif "Setpt" in col[:5]:
-                units.append("[oC]")
-            elif "RH" in col[:2]:
-                units.append("[%]")
-            elif "Va" in col[:2]:
-                units.append("[m/s]")
-            elif "Met" in col[:3]:
-                units.append("[W]")
-            elif "HL" in col[1:3]:
-                units.append("[W]")
-            elif "CO" in col[:2]:
-                units.append("[L/h]")
-            elif "T" in col[:1]:
-                units.append("[oC]")
-            elif "BF" in col[:2]:
-                units.append("[L/h]")
-            elif "M" in col[:1]:
-                units.append("[W]")
-            elif "Q" in col[:1]:
-                units.append("[W]")
-            elif "R" in col[:1]:
-                units.append("[K.m2/W]")
-            elif "E" in col[:1]:
-                units.append("[W]")
-            elif "dt" == col:
-                units.append("[sec]")
+            param, rbn = remove_bodyname(col)
+            if param in ALL_OUT_PARAMS:
+                u = ALL_OUT_PARAMS[param]["unit"]
+                units.append(u)
+
+                m = ALL_OUT_PARAMS[param]["meaning"]
+                if rbn:
+                    meanigs.append(m.replace("body part", rbn))
+                else:
+                    meanigs.append(m)
             else:
                 units.append("")
+                meanigs.append("")
 
         with open(path, "wt", newline="") as f:
             writer = csv.writer(f)
             writer.writerow(list(columns))
-            writer.writerow(units)
+            if unit: writer.writerow(units)
+            if meanig: writer.writerow(meanigs)
             for i in range(len(dictout["CycleTime"])):
                 row = []
                 for k in columns:
@@ -973,3 +879,5 @@ def _to17array(inp):
         array = np.ones(17)*inp
     return array.copy()
 
+if __name__ is "__main__":
+    import jos3

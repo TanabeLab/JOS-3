@@ -8,7 +8,7 @@ Please cite us if you use this package : Y. Takahashi, A. Nomoto, S. Yoda, R. Hi
 
 # Requirement
 
-* python 3
+* python3
 * numpy
 
 # Installation

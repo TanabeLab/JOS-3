@@ -116,8 +116,8 @@ VINDEX = {}
 for key in LAYER_NAMES:
     INDEX[key] = index_bylayer(key)
     VINDEX[key] = validindex_bylayer(key)
-    
-    
+
+
 def localarr(bf_cr, bf_ms, bf_fat, bf_sk, bf_ava_hand, bf_ava_foot):
     """
     Create matrix to calculate heat exchage by blood flow in each segment [W/K]
@@ -237,7 +237,7 @@ def wholebody(bf_art, bf_vein, bf_ava_hand, bf_ava_foot):
     """
     Create matrix to calculate heat exchage by blood flow between segments [W/K]
     """
-    
+
     def flow(up, down, bloodflow):
         arr = np.zeros((NUM_NODES, NUM_NODES))
         # Coefficient = 1.067 [Wh/L.K]
@@ -321,3 +321,31 @@ def wholebody(bf_art, bf_vein, bf_ava_hand, bf_ava_foot):
     arr83 += flow(RThigh+2, Pelvis+1, bf_ava_foot) #RThigh.vein to Pelvis
 
     return arr83
+
+
+def remove_bodyname(text):
+    """
+    Removing the body name from the parameter name.
+
+    Parameters
+    ----------
+    text : str
+        Parameter name
+
+    Returns
+    -------
+    rtext : str
+        Parameter name removed the body name.
+    removed : str
+        The removed body name
+
+    """
+
+    rtext = text
+    removed = None
+    for bn in BODY_NAMES:
+        if bn in text:
+            rtext = rtext.replace(bn, "")
+            removed = bn
+            break
+    return rtext, removed
