@@ -159,7 +159,7 @@ class JOS3():
     >>> docs = model.show_outparam_docs()
     >>> print(docs)
 
-    Get basal metabolic rate [W/m2] using Getters
+    Check basal metabolic rate [W/m2] using Getters
 
     >>> model.BMR
     """
@@ -660,7 +660,7 @@ class JOS3():
         >>> import jos3
         >>> model = jos3.JOS3()
         >>> model.simulate(60)
-        >>> model.to_csv(folder="C:/Users/takahashi-yoshito/desktop")
+        >>> model.to_csv(folder="C:/Users/takahashi/desktop")
         """
 
         if path is None:
