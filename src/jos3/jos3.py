@@ -61,7 +61,7 @@ class JOS3():
         The default is None.
 
 
-    Setter
+    Setter & Getter
     -------
     Input parameters of environmental conditions are set as the Setter format.
     If you set the different conditons in each body parts, set the list.
@@ -85,15 +85,51 @@ class JOS3():
         PAR of sitting quietly is 1.2.
 
 
+    Getter
+    -------
+    JOS3 has some useful getters to check the current parameters.
+
+    BSA : numpy.ndarray (17,)
+        Body surface areas by local body segments [m2].
+    Rt : numpy.ndarray (17,)
+        Dry heat resistances between the skin and ambience areas by local body segments [K.m2/W].
+    Ret : numpy.ndarray (17,)
+        Wet (Evaporative) heat resistances between the skin and ambience areas by local body segments [Pa.m2/W].
+    Wet : numpy.ndarray (17,)
+        Skin wettedness on local body segments [-].
+    WetMean : float
+        Mean skin wettedness of the whole body [-].
+    TskMean : float
+        Mean skin temperature of the whole body [oC].
+    Tsk : numpy.ndarray (17,)
+        Skin temperatures by the local body segments [oC].
+    Tcr : numpy.ndarray (17,)
+        Skin temperatures by the local body segments [oC].
+    Tcb : numpy.ndarray (1,)
+        Core temperatures by the local body segments [oC].
+    Tar : numpy.ndarray (17,)
+        Arterial temperatures by the local body segments [oC].
+    Tve : numpy.ndarray (17,)
+        Vein temperatures by the local body segments [oC].
+    Tsve : numpy.ndarray (12,)
+        Superfical vein temperatures by the local body segments [oC].
+    Tms : numpy.ndarray (2,)
+        Muscle temperatures of Head and Pelvis [oC].
+    Tfat : numpy.ndarray (2,)
+        Fat temperatures of Head and Pelvis  [oC].
+    BMR : float
+        Basal metabolic rate [W/m2].
+
+
     Examples
     -------
 
-    Buliding a model:
+    Make a model:
 
     >>> import jos3
     >>> model = jos3.JOS3(height=1.7, weight=60, age=30)
 
-    Setting the first phase:
+    Set the first phase:
 
     >>> model.To = 28  # Operative temperature [oC]
     >>> model.RH = 40  # Relative humidity [%]
@@ -102,26 +138,30 @@ class JOS3():
     >>> model.posture = "sitting"  # Set the posture
     >>> model.simulate(60)  # Exposre time = 60 [min]
 
-    Setting the next phase:
+    Set the next phase:
 
-    >>> model.To = 20  # Changing only operative temperature
+    >>> model.To = 20  # Chang only operative temperature
     >>> model.simulate(60)  # Additional exposre time = 60 [min]
 
 
-    Showing the results:
+    Show the results:
 
     >>> import pandas as pd
-    >>> df = pd.DataFrame(model.dict_results())  # Making pandas.DataFrame
-    >>> df.TskMean.plot()  # Showing the graph of mean skin temp.
+    >>> df = pd.DataFrame(model.dict_results())  # Make pandas.DataFrame
+    >>> df.TskMean.plot()  # Show the graph of mean skin temp.
 
     Exporting the results as csv:
 
     >>> model.to_csv(folder="C:/Users/takahashi/Desktop")
 
-    Showing the documentaion of the output parameters
+    Show the documentaion of the output parameters
 
-    >>> docs = jos3.show_outparam_docs()
+    >>> docs = model.show_outparam_docs()
     >>> print(docs)
+
+    Get basal metabolic rate [W/m2] using Getters
+
+    >>> model.BMR
     """
 
 
@@ -195,11 +235,11 @@ class JOS3():
         self._cycle = 0 # Cycle time
 
         # Reset setpoint temperature
-        dictout = self.reset_setpt()
+        dictout = self._reset_setpt()
         self._history.append(dictout)  # Save the last model parameters
 
 
-    def reset_setpt(self):
+    def _reset_setpt(self):
         """
         Reset setpoint temperature by steady state calculation.
         Be careful, input parameters (Ta, Tr, RH, Va, Icl, PAR) and body
@@ -471,7 +511,7 @@ class JOS3():
 
 
         detailout = {}
-        if self._ex_output:
+        if self._ex_output and output:
             detailout["Name"] = self.model_name
             detailout["Height"] = self._height
             detailout["Weight"] = self._weight
@@ -538,7 +578,7 @@ class JOS3():
 
         Returns
         -------
-        pandas.DataFrame
+        Dictionaly of the results
         """
         if not self._history:
             print("The model has no data.")
@@ -606,13 +646,23 @@ class JOS3():
             Output path. If you don't use the default file name, set a name.
             The default is None.
         folder : str, optional
-            Output folder. If you use the default file name, set a only folder path.
+            Output folder. If you use the default file name with the current time,
+            set a only folder path.
             The default is None.
         unit : bool, optional
-            Writes units in csv file. The default is True.
+            Write units in csv file. The default is True.
         meaning : bool, optional
-            Writes meanings of the parameters in csv file. The default is True.
+            Write meanings of the parameters in csv file. The default is True.
+
+
+        Examples
+        ----------
+        >>> import jos3
+        >>> model = jos3.JOS3()
+        >>> model.simulate(60)
+        >>> model.to_csv(folder="C:/Users/takahashi-yoshito/desktop")
         """
+
         if path is None:
             nowtime = dt.datetime.now().strftime("%Y%m%d-%H%M%S")
             path = "{}_{}.csv".format(self.model_name, nowtime)
@@ -853,7 +903,7 @@ class JOS3():
         bmr = threg.basal_met(
                 self._height, self._weight, self._age,
                 self._sex, self._bmr_equation,)
-        return bmr
+        return bmr / self.BSA.sum()
 
 
 def _to17array(inp):

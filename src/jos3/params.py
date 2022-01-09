@@ -318,7 +318,7 @@ ALL_OUT_PARAMS = {
 
 def show_outparam_docs():
     """
-    Showing the documentation of the output parameters.
+    Show the documentation of the output parameters.
 
     Returns
     -------
