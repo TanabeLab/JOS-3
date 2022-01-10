@@ -32,6 +32,7 @@ setup(
     packages=find_packages("src"),
     package_dir={'': "src"},
     install_requires=["numpy"],
+    setup_requires=["numpy"],
     license="MIT",
     classifiers=[
         'Operating System :: OS Independent',
