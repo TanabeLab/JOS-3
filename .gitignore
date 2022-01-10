@@ -4,3 +4,4 @@ dist/
 build/
 jos3.egg-info/
 .eggs/
+*.csv

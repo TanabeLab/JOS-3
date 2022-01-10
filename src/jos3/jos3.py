@@ -156,8 +156,7 @@ class JOS3():
 
     Show the documentaion of the output parameters:
 
-    >>> docs = model.show_outparam_docs()
-    >>> print(docs)
+    >>> jos3.show_outparam_docs()
 
     Check basal metabolic rate [W/m2] using Getters:
 

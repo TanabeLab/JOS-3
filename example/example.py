@@ -20,10 +20,10 @@ df = pd.DataFrame(model.dict_results())  # Make pandas.DataFrame
 df.TskMean.plot()  # Show the graph of mean skin temp.
 
 # Exporting the results as csv
-model.to_csv(folder="C:/Users/takahashi/Desktop")
+model.to_csv()
 
 # Show the documentaion of the output parameters
-model.show_outparam_docs()
+jos3.show_outparam_docs()
 
 # Check basal metabolic rate [W/m2] using Getters
 model.BMR
