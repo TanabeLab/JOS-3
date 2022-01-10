@@ -24,13 +24,8 @@ Please also check pythermalcomfort project: F. Tartarini, S. Schiavon, pythermal
 pip install jos3
 ```
 
-or
 
-```bash
-pip install git+https://github.com/TanabeLab/JOS-3.git
-```
-
-If you have not installed numpy in your environment, do the following
+If you have not installed numpy in your environment, do the following.
 
 ```bash
 pip install numpy
