@@ -56,16 +56,17 @@ df.TskMean.plot()  # Show the graph of mean skin temp.
 
 # Exporting the results as csv
 model.to_csv(folder="C:/Users/takahashi/Desktop")
+```
+![result](https://raw.githubusercontent.com/TanabeLab/JOS-3/master/example/ex_result.png)
 
+```python
 # Show the documentaion of the output parameters
-docs = model.show_outparam_docs()
-print(docs)
+model.show_outparam_docs()
 
 # Check basal metabolic rate [W/m2] using Getters
 model.BMR
 ```
 
-![result](https://raw.githubusercontent.com/TanabeLab/JOS-3/master/example/ex_result.png)
 
 # Author
 
