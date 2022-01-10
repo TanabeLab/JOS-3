@@ -8,22 +8,162 @@ import numpy as np
 try:
     from . import thermoregulation as threg
     from . import matrix
-    from .matrix import NUM_NODES, INDEX, VINDEX, BODY_NAMES
+    from .matrix import NUM_NODES, INDEX, VINDEX, BODY_NAMES, remove_bodyname
     from .comfmod import preferred_temp
     from . import construction as cons
     from .construction import _BSAst
+    from .params import ALL_OUT_PARAMS, show_outparam_docs
 # Import from absolute path
 # These codes are for debugging
 except ImportError:
     from jos3 import thermoregulation as threg
     from jos3 import matrix
-    from jos3.matrix import NUM_NODES, INDEX, VINDEX, BODY_NAMES
+    from jos3.matrix import NUM_NODES, INDEX, VINDEX, BODY_NAMES, remove_bodyname
     from jos3.comfmod import preferred_temp
     from jos3 import construction as cons
     from jos3.construction import _BSAst
+    from jos3.params import ALL_OUT_PARAMS, show_outparam_docs
 
 
 class JOS3():
+    """
+    JOS-3 is a numeric model to simulate a human thermoregulation.
+    You can see all the system of the model from following journal.
+
+    Y.Takahashi, A.Nomoto, S.Yoda, R.Hisayama, M.Ogata, Y.Ozeki, S.Tanabe,
+    Thermoregulation Model JOS-3 with New Open Source Code, Energy & Buildings (2020),
+    doi: https://doi.org/10.1016/j.enbuild.2020.110575
+
+
+    Parameters
+    -------
+    height : float, optional
+        Body height [m]. The default is 1.72.
+    weight : float, optional
+        Body weight [kg]. The default is 74.43.
+    fat : float, optional
+        Fat rte [%]. The default is 15.
+    age : int, optional
+        Age [years]. The default is 20.
+    sex : str, optional
+        Sex ("male" or "female"). The default is "male".
+    ci : float, optional
+        Cardiac index [L/min/m2]. The default is 2.6432.
+    bmr_equation : str, optional
+        Choose a BMR equation. The default is "harris-benedict".
+    bsa_equation : str, optional
+        Choose a BSA equation.
+        You can choose
+        The default is "dubois".
+    ex_output : None, list or "all", optional
+        If you want to get extra output parameters, set the parameters as the list format.
+        If ex_output is "all", all parameters are output.
+        The default is None.
+
+
+    Setter & Getter
+    -------
+    Input parameters of environmental conditions are set as the Setter format.
+    If you set the different conditons in each body parts, set the list.
+    List input must be 17 lengths and means the input of "Head", "Neck", "Chest",
+    "Back", "Pelvis", "LShoulder", "LArm", "LHand", "RShoulder", "RArm",
+    "RHand", "LThigh", "LLeg", "LFoot", "RThigh", "RLeg" and "RFoot".
+
+    Ta : float or list
+        Air temperature [oC].
+    Tr : float or list
+        Mean radiant temperature [oC].
+    Va : float or list
+        Air velocity [m/s].
+    RH : float or list
+        Relative humidity [%].
+    Icl : float or list
+        Clothing insulation [clo].
+    PAR : float
+        Physical activity ratio [-].
+        This equals the ratio of metaboric rate to basal metablic rate.
+        PAR of sitting quietly is 1.2.
+
+
+    Getter
+    -------
+    JOS3 has some useful getters to check the current parameters.
+
+    BSA : numpy.ndarray (17,)
+        Body surface areas by local body segments [m2].
+    Rt : numpy.ndarray (17,)
+        Dry heat resistances between the skin and ambience areas by local body segments [K.m2/W].
+    Ret : numpy.ndarray (17,)
+        Wet (Evaporative) heat resistances between the skin and ambience areas by local body segments [Pa.m2/W].
+    Wet : numpy.ndarray (17,)
+        Skin wettedness on local body segments [-].
+    WetMean : float
+        Mean skin wettedness of the whole body [-].
+    TskMean : float
+        Mean skin temperature of the whole body [oC].
+    Tsk : numpy.ndarray (17,)
+        Skin temperatures by the local body segments [oC].
+    Tcr : numpy.ndarray (17,)
+        Skin temperatures by the local body segments [oC].
+    Tcb : numpy.ndarray (1,)
+        Core temperatures by the local body segments [oC].
+    Tar : numpy.ndarray (17,)
+        Arterial temperatures by the local body segments [oC].
+    Tve : numpy.ndarray (17,)
+        Vein temperatures by the local body segments [oC].
+    Tsve : numpy.ndarray (12,)
+        Superfical vein temperatures by the local body segments [oC].
+    Tms : numpy.ndarray (2,)
+        Muscle temperatures of Head and Pelvis [oC].
+    Tfat : numpy.ndarray (2,)
+        Fat temperatures of Head and Pelvis  [oC].
+    BMR : float
+        Basal metabolic rate [W/m2].
+
+
+    Examples
+    -------
+
+    Make a model:
+
+    >>> import jos3
+    >>> model = jos3.JOS3(height=1.7, weight=60, age=30)
+
+    Set the first phase:
+
+    >>> model.To = 28  # Operative temperature [oC]
+    >>> model.RH = 40  # Relative humidity [%]
+    >>> model.Va = 0.2  # Air velocity [m/s]
+    >>> model.PAR = 1.2  # Physical activity ratio [-]
+    >>> model.posture = "sitting"  # Set the posture
+    >>> model.simulate(60)  # Exposre time = 60 [min]
+
+    Set the next phase:
+
+    >>> model.To = 20  # Chang only operative temperature
+    >>> model.simulate(60)  # Additional exposre time = 60 [min]
+
+
+    Show the results:
+
+    >>> import pandas as pd
+    >>> df = pd.DataFrame(model.dict_results())  # Make pandas.DataFrame
+    >>> df.TskMean.plot()  # Show the graph of mean skin temp.
+
+    Exporting the results as csv:
+
+    >>> model.to_csv(folder="C:/Users/takahashi/Desktop")
+
+    Show the documentaion of the output parameters:
+
+    >>> jos3.show_outparam_docs()
+
+    Check basal metabolic rate [W/m2] using Getters:
+
+    >>> model.BMR
+    """
+
+
     def __init__(
             self,
             height=1.72,
@@ -36,34 +176,6 @@ class JOS3():
             bsa_equation="dubois",
             ex_output=None,
             ):
-        """
-        Parameters
-        ----------
-        height : float, optional
-            Body height [m]. The default is 1.72.
-        weight : float, optional
-            Body weight [kg]. The default is 74.43.
-        fat : float, optional
-            Fat rte [%]. The default is 15.
-        age : int, optional
-            Age [years]. The default is 20.
-        sex : str, optional
-            Sex ("male" or "female"). The default is "male".
-        ci : float, optional
-            Cardiac index [L/min/m2]. The default is 2.6432.
-        bmr_equation : str, optional
-            Choose a BMR equation. The default is "harris-benedict".
-        bsa_equation : str, optional
-            Choose a BSA equation. The default is "dubois".
-        ex_output : None, list or "all", optional
-            Extra output parameters. If "all", all parameters are output.
-            The default is None.
-
-        Returns
-        -------
-        None.
-        """
-
 
         self._height = height
         self._weight = weight
@@ -122,11 +234,11 @@ class JOS3():
         self._cycle = 0 # Cycle time
 
         # Reset setpoint temperature
-        dictout = self.reset_setpt()
+        dictout = self._reset_setpt()
         self._history.append(dictout)  # Save the last model parameters
 
 
-    def reset_setpt(self):
+    def _reset_setpt(self):
         """
         Reset setpoint temperature by steady state calculation.
         Be careful, input parameters (Ta, Tr, RH, Va, Icl, PAR) and body
@@ -137,7 +249,7 @@ class JOS3():
         Parameters of JOS-3 : dict
         """
         # Set operative temperature under PMV=0 environment
-        # Metabolic rate at PAR = 1.25
+        # PAR = 1.25
         # 1 met = 58.15 W/m2
         met = self.BMR * 1.25 / 58.15 / self.BSA.sum() # [met]
         self.To = preferred_temp(met=met)
@@ -161,7 +273,7 @@ class JOS3():
 
     def simulate(self, times, dtime=60, output=True):
         """
-        Execute JOS3 model.
+        Execute JOS-3 model.
 
         Parameters
         ----------
@@ -217,7 +329,7 @@ class JOS3():
         if self._hr is not None:
             hr = self._hr
 
-        # Operarive temp. [oC], heat and evaporative heat resistance [K/W], [kPa/W]
+        # Operarive temp. [oC], heat and evaporative heat resistance [m2.K/W], [m2.kPa/W]
         to = threg.operative_temp(self._ta, self._tr, hc, hr,)
         r_t = threg.dry_r(hc, hr, self._clo)
         r_et = threg.wet_r(hc, self._clo, self._iclo)
@@ -239,7 +351,7 @@ class JOS3():
         # Skinwettedness [-], Esk, Emax, Esw [W]
         wet, e_sk, e_max, e_sweat = threg.evaporation(
                 err_cr, err_sk, tsk,
-                self._ta, self._rh, r_et, 
+                self._ta, self._rh, r_et,
                 self._height, self._weight, self._bsa_equation, self._age)
 
         # Skin blood flow, basal skin blood flow [L/h]
@@ -262,7 +374,7 @@ class JOS3():
         # Thermogenesis by non-shivering [W]
         if self.options["nonshivering_thermogenesis"]:
             mnst = threg.nonshivering(err_cr, err_sk,
-                self._height, self._weight, self._bsa_equation, self._age, 
+                self._height, self._weight, self._bsa_equation, self._age,
                 self.options["cold_acclimated"], self.options["bat_positive"])
         else: # not consider NST
             mnst = np.zeros(17)
@@ -393,13 +505,12 @@ class JOS3():
             dictout["Wle"] = (wlesk.sum() + wleres)
             dictout["CO"] = co
             dictout["Met"] = qall
-            dictout["Met"] = qall
             dictout["RES"] = res_sh + res_lh
             dictout["THLsk"] = shlsk + e_sk
 
 
         detailout = {}
-        if self._ex_output:
+        if self._ex_output and output:
             detailout["Name"] = self.model_name
             detailout["Height"] = self._height
             detailout["Weight"] = self._weight
@@ -408,7 +519,7 @@ class JOS3():
             detailout["Sex"] = self._sex
             detailout["Age"] = self._age
             detailout["Setptcr"] = setpt_cr
-            detailout["Setptcr"] = setpt_sk
+            detailout["Setptsk"] = setpt_sk
             detailout["Tcb"] = self.Tcb
             detailout["Tar"] = self.Tar
             detailout["Tve"] = self.Tve
@@ -466,7 +577,7 @@ class JOS3():
 
         Returns
         -------
-        pandas.DataFrame
+        Dictionaly of the results
         """
         if not self._history:
             print("The model has no data.")
@@ -504,7 +615,7 @@ class JOS3():
             except TypeError:  # if the value is not iter.
                 keys= [key]  # convert to iter
             key2keys.update({key: keys})
-        
+
         data = []
         for i, dictout in enumerate(self._history):
             row = {}
@@ -516,7 +627,7 @@ class JOS3():
                     values = value
                 row.update(dict(zip(keys, values)))
             data.append(row)
-            
+
         outdict = dict(zip(data[0].keys(), [[] for i in range(len(data[0].keys()))]))
         for row in data:
             for k in data[0].keys():
@@ -524,10 +635,9 @@ class JOS3():
         return outdict
 
 
-    def to_csv(self, path=None, folder=None, unit=True):
+    def to_csv(self, path=None, folder=None, unit=True, meanig=True):
         """
-        Export results with "units" as csv format.
-        If you want to know units of parametes, use this method.
+        Export results as csv format.
 
         Parameters
         ----------
@@ -535,11 +645,23 @@ class JOS3():
             Output path. If you don't use the default file name, set a name.
             The default is None.
         folder : str, optional
-            Output folder. If you use the default file name, set a only folder path.
+            Output folder. If you use the default file name with the current time,
+            set a only folder path.
             The default is None.
         unit : bool, optional
-            Writes unit in csv file. The default is True.
+            Write units in csv file. The default is True.
+        meaning : bool, optional
+            Write meanings of the parameters in csv file. The default is True.
+
+
+        Examples
+        ----------
+        >>> import jos3
+        >>> model = jos3.JOS3()
+        >>> model.simulate(60)
+        >>> model.to_csv(folder="C:/Users/takahashi/desktop")
         """
+
         if path is None:
             nowtime = dt.datetime.now().strftime("%Y%m%d-%H%M%S")
             path = "{}_{}.csv".format(self.model_name, nowtime)
@@ -552,42 +674,27 @@ class JOS3():
 
         columns = [k for k in dictout.keys()]
         units = []
+        meanigs = []
         for col in columns:
-            if "RES" in col[:3]:
-                units.append("[W]")
-            elif "Setpt" in col[:5]:
-                units.append("[oC]")
-            elif "RH" in col[:2]:
-                units.append("[%]")
-            elif "Va" in col[:2]:
-                units.append("[m/s]")
-            elif "Met" in col[:3]:
-                units.append("[W]")
-            elif "HL" in col[1:3]:
-                units.append("[W]")
-            elif "CO" in col[:2]:
-                units.append("[L/h]")
-            elif "T" in col[:1]:
-                units.append("[oC]")
-            elif "BF" in col[:2]:
-                units.append("[L/h]")
-            elif "M" in col[:1]:
-                units.append("[W]")
-            elif "Q" in col[:1]:
-                units.append("[W]")
-            elif "R" in col[:1]:
-                units.append("[K.m2/W]")
-            elif "E" in col[:1]:
-                units.append("[W]")
-            elif "dt" == col:
-                units.append("[sec]")
+            param, rbn = remove_bodyname(col)
+            if param in ALL_OUT_PARAMS:
+                u = ALL_OUT_PARAMS[param]["unit"]
+                units.append(u)
+
+                m = ALL_OUT_PARAMS[param]["meaning"]
+                if rbn:
+                    meanigs.append(m.replace("body part", rbn))
+                else:
+                    meanigs.append(m)
             else:
                 units.append("")
+                meanigs.append("")
 
         with open(path, "wt", newline="") as f:
             writer = csv.writer(f)
             writer.writerow(list(columns))
-            writer.writerow(units)
+            if unit: writer.writerow(units)
+            if meanig: writer.writerow(meanigs)
             for i in range(len(dictout["CycleTime"])):
                 row = []
                 for k in columns:
@@ -598,7 +705,7 @@ class JOS3():
     #--------------------------------------------------------------------------
     # Setter
     #--------------------------------------------------------------------------
-    def set_ex_q(self, tissue, value):
+    def _set_ex_q(self, tissue, value):
         """
         Set extra heat gain by tissue name.
 
@@ -613,7 +720,7 @@ class JOS3():
         Returns
         -------
         array
-            Current extra heat gain of model.
+            Extra heat gain of model.
         """
         self.ex_q[INDEX[tissue]] = value
         return self.ex_q
@@ -732,13 +839,13 @@ class JOS3():
         wet, *_ = threg.evaporation(err_cr, err_sk,
                 self._ta, self._rh, self.Ret, self._bsa_rate, self._age)
         return wet
-    
+
     @property
     def WetMean(self):
         wet = self.Wet
         return np.average(wet, weights=_BSAst)
 
-    
+
 
     @property
     def TskMean(self):
@@ -795,8 +902,9 @@ class JOS3():
         bmr = threg.basal_met(
                 self._height, self._weight, self._age,
                 self._sex, self._bmr_equation,)
-        return bmr
-    
+        return bmr / self.BSA.sum()
+
+
 def _to17array(inp):
     """
     Make ndarray (17,).
@@ -819,3 +927,6 @@ def _to17array(inp):
     except:
         array = np.ones(17)*inp
     return array.copy()
+
+if __name__ is "__main__":
+    import jos3
