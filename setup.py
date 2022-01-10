@@ -20,6 +20,9 @@ for line in open(initpath):
         line = line.split('=')[1].strip().replace('"', "").replace("'", "")
 version = line
 
+def _requires_from_file(filename):
+    return open(filename).read().splitlines()
+
 setup(
     name="jos3",
     version=version,
@@ -31,8 +34,9 @@ setup(
     long_description_content_type='text/markdown',
     packages=find_packages("src"),
     package_dir={'': "src"},
-    install_requires=["numpy"],
-    setup_requires=["numpy"],
+    # install_requires=_requires_from_file('requirements.txt'),
+    # setup_requires=["numpy"],
+    # tests_requires=["numpy", "pandas", "matplotlib"],
     license="MIT",
     classifiers=[
         'Operating System :: OS Independent',

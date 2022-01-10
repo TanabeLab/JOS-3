@@ -30,6 +30,12 @@ or
 pip install git+https://github.com/TanabeLab/JOS-3.git
 ```
 
+If you have not installed numpy in your environment, do the following
+
+```bash
+pip install numpy
+```
+
 # Usage
 
 ```python
