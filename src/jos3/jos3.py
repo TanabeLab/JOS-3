@@ -154,12 +154,12 @@ class JOS3():
 
     >>> model.to_csv(folder="C:/Users/takahashi/Desktop")
 
-    Show the documentaion of the output parameters
+    Show the documentaion of the output parameters:
 
     >>> docs = model.show_outparam_docs()
     >>> print(docs)
 
-    Check basal metabolic rate [W/m2] using Getters
+    Check basal metabolic rate [W/m2] using Getters:
 
     >>> model.BMR
     """

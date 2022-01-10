@@ -1,4 +1,5 @@
 *.pyc
+*.pypirc
 dist/
 build/
 jos3.egg-info/
