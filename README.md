@@ -61,7 +61,7 @@ df.TskMean.plot()  # Show the graph of mean skin temp.
 model.to_csv(folder="C:/Users/takahashi/Desktop")
 
 # Show the documentaion of the output parameters
-jos3.show_outparam_docs()
+print(jos3.show_outparam_docs())
 
 # Check basal metabolic rate [W/m2] using Getters
 model.BMR
