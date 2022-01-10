@@ -6,6 +6,13 @@ The model has been derived from 65MN https://doi.org/10.1016/S0378-7788(02)00014
 
 Please cite us if you use this package : Y. Takahashi, A. Nomoto, S. Yoda, R. Hisayama, M. Ogata, Y. Ozeki, S. Tanabe,Thermoregulation Model JOS-3 with New Open Source Code, Energy & Buildings (2020), doi: https://doi.org/10.1016/j.enbuild.2020.110575
 
+# Note
+
+Our work is packed in [pythermalcomfort](https://github.com/CenterForTheBuiltEnvironment/pythermalcomfort).
+
+Please also check https://doi.org/10.1016/j.softx.2020.100578 .
+
+
 # Requirement
 
 * python3
@@ -67,4 +74,5 @@ model.BMR
 * takahashiyoshito64@gmail.com
 
 # License
+
 jos3 is under [MIT license](https://en.wikipedia.org/wiki/MIT_License).
