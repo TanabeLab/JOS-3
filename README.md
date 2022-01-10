@@ -10,9 +10,7 @@ Please cite us if you use this package : Y. Takahashi, A. Nomoto, S. Yoda, R. Hi
 
 Our work is packed in [pythermalcomfort](https://github.com/CenterForTheBuiltEnvironment/pythermalcomfort).
 
-Please also check pythermalcomfort project:
-
-F. Tartarini, S. Schiavon, pythermalcomfort: A Python package for thermal comfort research, SoftwareX (2020), doi: https://doi.org/10.1016/j.softx.2020.100578 .
+Please also check pythermalcomfort project: F. Tartarini, S. Schiavon, pythermalcomfort: A Python package for thermal comfort research, SoftwareX (2020), doi: https://doi.org/10.1016/j.softx.2020.100578 .
 
 
 # Requirement
