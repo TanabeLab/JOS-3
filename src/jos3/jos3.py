@@ -73,6 +73,8 @@ class JOS3():
         Air temperature [oC].
     Tr : float or list
         Mean radiant temperature [oC].
+    To : float or list
+        Operative temperature [oC].
     Va : float or list
         Air velocity [m/s].
     RH : float or list
@@ -83,7 +85,10 @@ class JOS3():
         Physical activity ratio [-].
         This equals the ratio of metaboric rate to basal metablic rate.
         PAR of sitting quietly is 1.2.
-
+    posture : str
+        Choose a posture from standing, sitting or lying.
+    bodytemp : numpy.ndarray (85,)
+        All segment temperatures of JOS-3
 
     Getter
     -------
@@ -251,7 +256,7 @@ class JOS3():
         # Set operative temperature under PMV=0 environment
         # PAR = 1.25
         # 1 met = 58.15 W/m2
-        met = self.BMR * 1.25 / 58.15 / self.BSA.sum() # [met]
+        met = self.BMR * 1.25 / 58.15  # [met]
         self.To = preferred_temp(met=met)
         self.RH = 50
         self.Va = 0.1
@@ -732,6 +737,14 @@ class JOS3():
 
     @property
     def Ta(self):
+        """
+        Getter
+
+        Returns
+        -------
+        Ta : numpy.ndarray (17,)
+            Air temperature [oC].
+        """
         return self._ta
     @Ta.setter
     def Ta(self, inp):
@@ -739,6 +752,14 @@ class JOS3():
 
     @property
     def Tr(self):
+        """
+        Getter
+
+        Returns
+        -------
+        Tr : numpy.ndarray (17,)
+            Mean radiant temperature [oC].
+        """
         return self._tr
     @Tr.setter
     def Tr(self, inp):
@@ -746,6 +767,14 @@ class JOS3():
 
     @property
     def To(self):
+        """
+        Getter
+
+        Returns
+        -------
+        To : numpy.ndarray (17,)
+            Operative temperature [oC].
+        """
         hc = threg.fixed_hc(threg.conv_coef(self._posture, self._va, self._ta, self.Tsk,), self._va)
         hr = threg.fixed_hr(threg.rad_coef(self._posture,))
         to = threg.operative_temp(self._ta, self._tr, hc, hr,)
@@ -757,6 +786,14 @@ class JOS3():
 
     @property
     def RH(self):
+        """
+        Getter
+
+        Returns
+        -------
+        RH : numpy.ndarray (17,)
+            Relative humidity [%].
+        """
         return self._rh
     @RH.setter
     def RH(self, inp):
@@ -764,6 +801,14 @@ class JOS3():
 
     @property
     def Va(self):
+        """
+        Getter
+
+        Returns
+        -------
+        Va : numpy.ndarray (17,)
+            Air velocity [m/s].
+        """
         return self._va
     @Va.setter
     def Va(self, inp):
@@ -771,6 +816,14 @@ class JOS3():
 
     @property
     def posture(self):
+        """
+        Getter
+
+        Returns
+        -------
+        posture : str
+            Current JOS3 posture.
+        """
         return self._posture
     @posture.setter
     def posture(self, inp):
@@ -794,6 +847,14 @@ class JOS3():
 
     @property
     def Icl(self):
+        """
+        Getter
+
+        Returns
+        -------
+        Icl : numpy.ndarray (17,)
+            Clothing insulation [clo].
+        """
         return self._clo
     @Icl.setter
     def Icl(self, inp):
@@ -801,6 +862,16 @@ class JOS3():
 
     @property
     def PAR(self):
+        """
+        Getter
+
+        Returns
+        -------
+        PAR : float
+            Physical activity ratio [-].
+            This equals the ratio of metaboric rate to basal metablic rate.
+            PAR of sitting quietly is 1.2.
+        """
         return self._par
     @PAR.setter
     def PAR(self, inp):
@@ -808,6 +879,14 @@ class JOS3():
 
     @property
     def bodytemp(self):
+        """
+        Getter
+
+        Returns
+        -------
+        bodytemp : numpy.ndarray (85,)
+            All segment temperatures of JOS-3
+        """
         return self._bodytemp
     @bodytemp.setter
     def bodytemp(self, inp):
@@ -819,21 +898,53 @@ class JOS3():
 
     @property
     def BSA(self):
+        """
+        Getter
+
+        Returns
+        -------
+        BSA : numpy.ndarray (17,)
+            Body surface areas by local body segments [m2].
+        """
         return self._bsa.copy()
 
     @property
     def Rt(self):
+        """
+        Getter
+
+        Returns
+        -------
+        Rt : numpy.ndarray (17,)
+            Dry heat resistances between the skin and ambience areas by local body segments [K.m2/W].
+        """
         hc = threg.fixed_hc(threg.conv_coef(self._posture, self._va, self._ta, self.Tsk,), self._va)
         hr = threg.fixed_hr(threg.rad_coef(self._posture,))
         return threg.dry_r(hc, hr, self._clo)
 
     @property
     def Ret(self):
+        """
+        Getter
+
+        Returns
+        -------
+        Ret : numpy.ndarray (17,)
+            Wet (Evaporative) heat resistances between the skin and ambience areas by local body segments [Pa.m2/W].
+        """
         hc = threg.fixed_hc(threg.conv_coef(self._posture, self._va, self._ta, self.Tsk,), self._va)
         return threg.wet_r(hc, self._clo, self._iclo)
 
     @property
     def Wet(self):
+        """
+        Getter
+
+        Returns
+        -------
+        Wet : numpy.ndarray (17,)
+            Skin wettedness on local body segments [-].
+        """
         err_cr = self.Tcr - self.setpt_cr
         err_sk = self.Tsk - self.setpt_sk
         wet, *_ = threg.evaporation(err_cr, err_sk,
@@ -842,6 +953,14 @@ class JOS3():
 
     @property
     def WetMean(self):
+        """
+        Getter
+
+        Returns
+        -------
+        WetMean : float
+            Mean skin wettedness of the whole body [-].
+        """
         wet = self.Wet
         return np.average(wet, weights=_BSAst)
 
@@ -849,42 +968,127 @@ class JOS3():
 
     @property
     def TskMean(self):
+        """
+        Getter
+
+        Returns
+        -------
+        TskMean : float
+            Mean skin temperature of the whole body [oC].
+        """
         return np.average(self._bodytemp[INDEX["skin"]], weights=_BSAst)
 
     @property
     def Tsk(self):
+        """
+        Getter
+
+        Returns
+        -------
+        Tsk : numpy.ndarray (17,)
+            Skin temperatures by the local body segments [oC].
+        """
         return self._bodytemp[INDEX["skin"]].copy()
 
     @property
     def Tcr(self):
+        """
+        Getter
+
+        Returns
+        -------
+        Tcr : numpy.ndarray (17,)
+            Skin temperatures by the local body segments [oC].
+        """
         return self._bodytemp[INDEX["core"]].copy()
 
     @property
     def Tcb(self):
+        """
+        Getter
+
+        Returns
+        -------
+        Tcb : numpy.ndarray (1,)
+            Core temperatures by the local body segments [oC].
+        """
         return self._bodytemp[0].copy()
 
     @property
     def Tar(self):
+        """
+        Getter
+
+        Returns
+        -------
+        Tar : numpy.ndarray (17,)
+            Arterial temperatures by the local body segments [oC].
+        """
         return self._bodytemp[INDEX["artery"]].copy()
 
     @property
     def Tve(self):
+        """
+        Getter
+
+        Returns
+        -------
+        Tve : numpy.ndarray (17,)
+            Vein temperatures by the local body segments [oC].
+        """
         return self._bodytemp[INDEX["vein"]].copy()
 
     @property
     def Tsve(self):
+        """
+        Getter
+
+        Returns
+        -------
+        Tsve : numpy.ndarray (12,)
+            Superfical vein temperatures by the local body segments [oC].
+        """
         return self._bodytemp[INDEX["sfvein"]].copy()
 
     @property
     def Tms(self):
+        """
+        Getter
+
+        Returns
+        -------
+        Tms : numpy.ndarray (2,)
+            Muscle temperatures of Head and Pelvis [oC].
+        """
         return self._bodytemp[INDEX["muscle"]].copy()
 
     @property
     def Tfat(self):
+        """
+        Getter
+
+        Returns
+        -------
+        Tfat : numpy.ndarray (2,)
+            Fat temperatures of Head and Pelvis  [oC].
+        """
         return self._bodytemp[INDEX["fat"]].copy()
 
     @property
     def bodyname(self):
+        """
+        Getter
+
+        Returns
+        -------
+        bodyname : list
+            JOS3 body names,
+            "Head", "Neck", "Chest", "Back", "Pelvis",
+            "LShoulder", "LArm", "LHand",
+            "RShoulder", "RArm", "RHand",
+            "LThigh", "LLeg", "LHand",
+            "RThigh", "RLeg" and "RHand".
+        """
         body = [
                 "Head", "Neck", "Chest", "Back", "Pelvis",
                 "LShoulder", "LArm", "LHand",
@@ -899,6 +1103,14 @@ class JOS3():
 
     @property
     def BMR(self):
+        """
+        Getter
+
+        Returns
+        -------
+        BMR : float
+            Basal metabolic rate [W/m2].
+        """
         bmr = threg.basal_met(
                 self._height, self._weight, self._age,
                 self._sex, self._bmr_equation,)
