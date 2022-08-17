@@ -65,7 +65,7 @@ def bsa_rate(height=1.72, weight=74.43, equation="dubois",):
     equation : str, optional
         The equation name (str) of bsa calculation. Choose a name from "dubois",
         "takahira", "fujimoto", or "kurazumi". The default is "dubois".
-        
+
     Returns
     -------
     bsa_rate : float
@@ -240,14 +240,14 @@ def conductance(height=1.72, weight=74.43, equation="dubois", fat=15,):
     cdt_ms_fat[0] = 13.222
     cdt_fat_sk[0] = 16.008
     cdt_cr_ms[4] = 3.0813  # Pelvis
-    cdt_ms_fat[4] = 0.3738
+    cdt_ms_fat[4] = 10.3738
     cdt_fat_sk[4] = 41.4954
 
     # vessel to core
     # The shape is a cylinder.
-    # It is assumed that the inner is vascular radius, 2.5mm and the outer is 
+    # It is assumed that the inner is vascular radius, 2.5mm and the outer is
     # stolwijk's core radius.
-    # The heat transer coefficient of the core is assumed as the Michel's 
+    # The heat transer coefficient of the core is assumed as the Michel's
     # counter-flow model 0.66816 [W/(m･K)].
     cdt_ves_cr = np.array([
             0, 0, 0, 0, 0,
@@ -321,8 +321,8 @@ def conductance(height=1.72, weight=74.43, equation="dubois", fat=15,):
 def capacity(height=1.72, weight=74.43, equation="dubois", age=20, ci=2.59):
     """
     Calculate the thermal capacity [J/K].
-    
-    The values of vascular and central blood capacity have been derived from 
+
+    The values of vascular and central blood capacity have been derived from
     Yokoyama's model.
     The specific heat of blood is assumed as 1.0 [kcal/L.K].
 
@@ -369,7 +369,7 @@ def capacity(height=1.72, weight=74.43, equation="dubois", age=20, ci=2.59):
 
     # core [Wh/K]
     cap_cr = np.array([
-            1.7229, 0.564, 10.2975, 9.3935, 13.834,
+            1.7229, 0.564, 10.2975, 9.3935, 4.488,
             1.6994, 1.1209, 0.1536, 1.6994, 1.1209, 0.1536,
             5.3117, 2.867, 0.2097, 5.3117, 2.867, 0.2097,])
 
