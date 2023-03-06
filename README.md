@@ -4,7 +4,7 @@ JOS-3 is a thermoregulation model to simulate human thermal physiology such as s
 
 The model has been derived from 65MN (https://doi.org/10.1016/S0378-7788(02)00014-2) and JOS-2 model (https://doi.org/10.1016/j.buildenv.2013.04.013).
 
-Please cite us if you use this package and describe which version you used : Y. Takahashi, A. Nomoto, S. Yoda, R. Hisayama, M. Ogata, Y. Ozeki, S. Tanabe,Thermoregulation Model JOS-3 with New Open Source Code, Energy & Buildings (2020), doi: https://doi.org/10.1016/j.enbuild.2020.110575
+Please cite us if you use this package and describe which version you use : Y. Takahashi, A. Nomoto, S. Yoda, R. Hisayama, M. Ogata, Y. Ozeki, S. Tanabe,Thermoregulation Model JOS-3 with New Open Source Code, Energy & Buildings (2020), doi: https://doi.org/10.1016/j.enbuild.2020.110575
 
 # Note
 
