@@ -42,7 +42,7 @@ class JOS3():
     weight : float, optional
         Body weight [kg]. The default is 74.43.
     fat : float, optional
-        Fat rte [%]. The default is 15.
+        Fat percentage [%]. The default is 15.
     age : int, optional
         Age [years]. The default is 20.
     sex : str, optional
@@ -50,15 +50,16 @@ class JOS3():
     ci : float, optional
         Cardiac index [L/min/m2]. The default is 2.6432.
     bmr_equation : str, optional
-        Choose a BMR equation. The default is "harris-benedict".
+        Choose a BMR equation. The default is "harris-benedict". 
+        To use the equation for Japanese, enter "japanese".
     bsa_equation : str, optional
         Choose a BSA equation.
-        You can choose
+        You can choose "dubois", "fujimoto", "kruazumi", "takahira".
         The default is "dubois".
     ex_output : None, list or "all", optional
-        If you want to get extra output parameters, set the parameters as the list format.
+        If you want to get extra output parameters, set the parameters as the list format like ["BFsk", "BFcr", "Tar"].
         If ex_output is "all", all parameters are output.
-        The default is None.
+        The default is None, which outputs only important parameters such as local skin temperatures. 
 
 
     Setter & Getter
@@ -145,7 +146,7 @@ class JOS3():
 
     Set the next phase:
 
-    >>> model.To = 20  # Chang only operative temperature
+    >>> model.To = 20  # Change only operative temperature
     >>> model.simulate(60)  # Additional exposre time = 60 [min]
 
 
