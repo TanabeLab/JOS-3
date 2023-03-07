@@ -199,7 +199,7 @@ model.simulate(times=30, # Number of loops of a simulation
 # Show the results
 df = pd.DataFrame(model.dict_results())  # Make pandas.DataFrame
 df.TskMean.plot()  # Plot time series of mean skin temperature.
-plt.show() # Show the plot
+plt.show('example2.png') # Show the plot
 
 # Exporting the results as csv
 model.to_csv('example2.csv')
