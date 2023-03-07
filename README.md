@@ -70,12 +70,6 @@ model.BMR
 
 # Example 2
 
-```python
-import jos3
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-
 """
 1. Builds a model and set a body built
 
@@ -109,6 +103,12 @@ ex_output : None, list or "all", optional
     If ex_output is "all", all parameters are output.
     The default is None, which outputs only important parameters such as local skin temperatures. 
 """
+```python
+import jos3
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
 model = jos3.JOS3(height=1.7,
                   weight=60,
                   fat=20,
