@@ -1,6 +1,6 @@
-# JOS-3
+# Joint system thermoregulation model (JOS-3)
 
-joint system thermoregulation model [JOS-3](https://www.sciencedirect.com/science/article/pii/S0378778820333612) 
+[Joint system thermoregulation model (JOS-3)](https://www.sciencedirect.com/science/article/pii/S0378778820333612)
 is a thermoregulation model to simulate human thermal physiology such as skin temperature, core temperature, 
 sweating rate, and so on at 17 local body parts as well as the whole body.
 
@@ -8,12 +8,16 @@ This model was developed at [Shin-ichi Tanabe Laboratory, Waseda University](htt
 and was derived from [65 Multi-Node model](https://doi.org/10.1016/S0378-7788(02)00014-2) 
 and [JOS-2 model](https://doi.org/10.1016/j.buildenv.2013.04.013).
 
-Please cite us if you use this package and describe which version you use : Y. Takahashi, A. Nomoto, S. Yoda, R. Hisayama, M. Ogata, Y. Ozeki, S. Tanabe,Thermoregulation Model JOS-3 with New Open Source Code, Energy & Buildings (2020), doi: https://doi.org/10.1016/j.enbuild.2020.110575
+Please cite us if you use this package and describe which version you used: 
+Y. Takahashi, A. Nomoto, S. Yoda, R. Hisayama, M. Ogata, Y. Ozeki, S. Tanabe,
+Thermoregulation Model JOS-3 with New Open Source Code, Energy & Buildings (2020), 
+doi: https://doi.org/10.1016/j.enbuild.2020.110575
 
 # Note
 
-Please also check [pythermalcomfort](https://github.com/CenterForTheBuiltEnvironment/pythermalcomfort) : F. Tartarini, S. Schiavon, pythermalcomfort: A Python package for thermal comfort research, SoftwareX (2020), doi: https://doi.org/10.1016/j.softx.2020.100578 .
-
+Please also check [pythermalcomfort](https://github.com/CenterForTheBuiltEnvironment/pythermalcomfort) :
+F. Tartarini, S. Schiavon, pythermalcomfort: A Python package for thermal comfort research, SoftwareX (2020), 
+doi: https://doi.org/10.1016/j.softx.2020.100578.
 
 # Requirement
 
@@ -25,12 +29,12 @@ https://pythermalcomfort.readthedocs.io/
 
 # Installation
 
+You can install the model with:
 ```bash
 pip install jos3
 ```
 
-
-If you have not installed numpy in your environment, do the following.
+If you have not installed numpy in your environment, please do so with:
 
 ```bash
 pip install numpy
@@ -74,18 +78,17 @@ model.BMR
 
 # Example 2
 
-"""
-1. Builds a model and set a body built
+Builds a model and set a body built
 -------
 
 As a first step, you need to build a model and set a body built that you want to simulate.
 
 The following are the parameters for JOS3 class.
 
-Parameters of body built
--------
-* height : float, optional
-    Body height [m]. The default is 1.72.
+Parameters of body built:
+
+* height : (float, optional)
+    - Body height [m]. The default is 1.72.
 
 * weight : float, optional
     Body weight [kg]. The default is 74.43.
