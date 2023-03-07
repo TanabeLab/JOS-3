@@ -1,6 +1,7 @@
 # JOS-3
 
-[JOS-3](https://www.sciencedirect.com/science/article/pii/S0378778820333612) is a thermoregulation model to simulate human thermal physiology such as skin temperature, core temperature, sweating rate, and so on at 17 local body parts as well as the whole body.
+joint system thermoregulation model [JOS-3](https://www.sciencedirect.com/science/article/pii/S0378778820333612) 
+is a thermoregulation model to simulate human thermal physiology such as skin temperature, core temperature, sweating rate, and so on at 17 local body parts as well as the whole body.
 
 This model was developed at [Shin-ichi Tanabe Laboratory, Waseda University](https://www.tanabe.arch.waseda.ac.jp/en/) and was derived from [65 Multi-Node model](https://doi.org/10.1016/S0378-7788(02)00014-2) and [JOS-2 model](https://doi.org/10.1016/j.buildenv.2013.04.013).
 
