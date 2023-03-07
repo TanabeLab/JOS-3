@@ -72,12 +72,13 @@ model.BMR
 
 """
 1. Builds a model and set a body built
+-------
 
 As a first step, you need to build a model and set a body built that you want to simulate.
 
 The following are the parameters for JOS3 class.
 
-Parameters
+Parameters of body built
 -------
 * height : float, optional
     Body height [m]. The default is 1.72.
@@ -91,17 +92,17 @@ Parameters
 * age : int, optional
     Age [years]. The default is 20.
 
-sex : str, optional
+* sex : str, optional
     Sex ("male" or "female"). The default is "male".
 
-ci : float, optional
+* ci : float, optional
     Cardiac index [L/min/m2]. The default is 2.6432.
 
-bmr_equation : str, optional
+* bmr_equation : str, optional
     Choose a BMR equation. The default is "harris-benedict". 
     To use the equation for Japanese, enter "japanese".
 
-bsa_equation : str, optional
+* bsa_equation : str, optional
     Choose a BSA equation.
     You can choose "dubois", "fujimoto", "kruazumi", "takahira".
     The default is "dubois".
