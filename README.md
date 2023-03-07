@@ -2,7 +2,7 @@
 
 JOS-3 is a thermoregulation model to simulate human thermal physiology such as skin temperature, core temperature, sweating rate, and so on at 17 local body parts as well as the whole body.
 
-The model has been derived from 65MN (https://doi.org/10.1016/S0378-7788(02)00014-2) and JOS-2 model (https://doi.org/10.1016/j.buildenv.2013.04.013).
+This model was developed at [Tanabe Laboratory, Waseda University](https://www.tanabe.arch.waseda.ac.jp/en/) and was derived from 65MN (https://doi.org/10.1016/S0378-7788(02)00014-2) and JOS-2 model (https://doi.org/10.1016/j.buildenv.2013.04.013).
 
 Please cite us if you use this package and describe which version you use : Y. Takahashi, A. Nomoto, S. Yoda, R. Hisayama, M. Ogata, Y. Ozeki, S. Tanabe,Thermoregulation Model JOS-3 with New Open Source Code, Energy & Buildings (2020), doi: https://doi.org/10.1016/j.enbuild.2020.110575
 
@@ -289,11 +289,10 @@ model.to_csv('example2.csv')
 print(jos3.show_outparam_docs())
 ```
 
-# Author
+# Contact
 
-* Yoshito Takahashi
-* Finished master's degree at [Tanabe Laboratory, Waseda University](https://www.tanabe.arch.waseda.ac.jp/en/)
-* takahashiyoshito64@gmail.com
+* Yoshito Takahashi (takahashiyoshito64@gmail.com)
+* 
 
 # License
 
