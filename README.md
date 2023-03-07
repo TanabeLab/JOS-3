@@ -107,7 +107,7 @@ Parameters of body built
     You can choose "dubois", "fujimoto", "kruazumi", "takahira".
     The default is "dubois".
 
-ex_output : None, list or "all", optional
+* ex_output : None, list or "all", optional
     If you want to get extra output parameters, set the parameters as the list format like ["BFsk", "BFcr", "Tar"].
     If ex_output is "all", all parameters are output.
     The default is None, which outputs only important parameters such as local skin temperatures. 
