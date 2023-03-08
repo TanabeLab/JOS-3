@@ -1,7 +1,7 @@
 # Joint system thermoregulation model (JOS-3)
 
 [Joint system thermoregulation model (JOS-3)](https://www.sciencedirect.com/science/article/pii/S0378778820333612)
-is a thermoregulation model to simulate human thermal physiology such as skin temperature, core temperature, 
+is a numerical model to simulate human thermal physiology such as skin temperature, core temperature, 
 sweating rate, and so on at 17 local body parts as well as the whole body.
 
 This model was developed at [Shin-ichi Tanabe Laboratory, Waseda University](https://www.tanabe.arch.waseda.ac.jp/en/) 
@@ -78,7 +78,7 @@ model.BMR
 
 # Example 2
 
-Builds a model and set a body built
+Build model and set body built
 -------
 
 As a first step, you need to build a model and set a body built that you want to simulate.
@@ -87,27 +87,20 @@ The following are the parameters for JOS3 class.
 
 Parameters of body built:
 
-* height : (float, optional)
-    - Body height [m]. The default is 1.72.
+* height (float, optional) : Body height [m]. The default is 1.72.
 
-* weight : float, optional
-    Body weight [kg]. The default is 74.43.
+* weight (float, optional) : Body weight [kg]. The default is 74.43.
 
-* fat : float, optional
-** Fat percentage [%]. The default is 15.
+* fat (float, optional) : Fat percentage [%]. The default is 15.
 
-* age : int, optional
-    Age [years]. The default is 20.
+* age (int, optional) : Age [years]. The default is 20.
 
-* sex : str, optional
-    Sex ("male" or "female"). The default is "male".
+* sex (str, optional) : Sex ("male" or "female"). The default is "male".
 
-* ci : float, optional
-    Cardiac index [L/min/m2]. The default is 2.6432.
+* ci (float, optional) : Cardiac index [L/min/m2]. The default is 2.6432.
 
-* bmr_equation : str, optional
-    Choose a BMR equation. The default is "harris-benedict". 
-    To use the equation for Japanese, enter "japanese".
+* bmr_equation (str, optional) : Choose a BMR equation. The default is "harris-benedict". 
+  * To use the equation for Japanese, enter "japanese".
 
 * bsa_equation : str, optional
     Choose a BSA equation.
