@@ -198,10 +198,26 @@ model.simulate(times=30, # Number of loops of a simulation
                ) # Additional exposure time = 30 [loops] * 60 [sec] = 30 [min]
 ```
 
-# Step 3: How to output
+## Step 3: How to output
 
 As explained above, output parameters can be added arbitrarily by setting ex_output in list format when creating JOS objects.
 The output parameters are suffixed with "Head," "Neck," "Chest," etc. for each body part.
+
+  Defalt output parameters
+  -------
+  CO      : Cardiac output (the sum of the whole blood flow) [L/h]
+  CycleTime: The counts of executing one cycle calculation [-]
+  Met     : Total heat production of the whole body [W]
+  ModTime : Simulation times [sec]
+  RES     : Heat loss by the respiration [W]
+  THLsk   : Heat loss from the skin of the body part [W]
+  Tcr     : Core temperature of the body part [oC]
+  Tsk     : Skin temperature of the body part [oC]
+  TskMean : Mean skin temperature of the body [oC]
+  Wet     : Local skin wettedness of the body part [-]
+  WetMean : Mean skin wettedness of the body [-]
+  Wle     : Weight loss rate by the evaporation and respiration of the whole body [g/sec]
+  dt      : Time delta of the model [sec]
 
 ```python
 # Show the results
@@ -220,10 +236,10 @@ model.to_csv('example.csv')
 print(jos3.show_outparam_docs())
 ```
 
-# Getter
+## Getter
 JOS3 has some useful getters to check the current parameters.
 
-## Getter parameters
+### Getter parameters
 
 * BSA (numpy.ndarray (17,)) : Body surface areas by local body segments [m2]. 
 * Rt (numpy.ndarray (17,)) : Dry heat resistances between the skin and ambience areas by local body segments [K.m2/W].
@@ -241,7 +257,7 @@ JOS3 has some useful getters to check the current parameters.
 * Tfat (numpy.ndarray (2,)) : Fat temperatures of Head and Pelvis  [oC]. 
 * BMR (float) : Basal metabolic rate [W/m2].
 
-## Example code
+### Example code
 
 ```python
 # Check basal metabolic rate [W/m2] using Getters
