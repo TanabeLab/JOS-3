@@ -19,7 +19,7 @@ Please also check [pythermalcomfort](https://github.com/CenterForTheBuiltEnviron
 F. Tartarini, S. Schiavon, pythermalcomfort: A Python package for thermal comfort research, SoftwareX (2020), 
 doi: https://doi.org/10.1016/j.softx.2020.100578.
 
-# Requirement
+### Requirement
 
 * python3
 * numpy
@@ -78,6 +78,15 @@ model.BMR
 
 # Example 2
 
+Step 0: Import packages
+-------
+```python
+import jos3
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+```
+
 Step 1: Build model and set body built
 -------
 
@@ -102,11 +111,6 @@ Parameters for JOS3 class are as follows:
   * If you want to see the all outputs, set ex_output to "all".
 
 ```python
-import jos3
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-
 model = jos3.JOS3(height=1.7,
                   weight=60,
                   fat=20,
