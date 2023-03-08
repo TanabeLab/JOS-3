@@ -101,7 +101,7 @@ Parameters of body built:
   which outputs only important parameters such as local skin temperatures or core temperature. 
   * If you want to get extra output parameters, set the parameters as the list format.
     (for example, if you want to see the data of ) ["BFsk", "BFcr", "Tar"]. 
-  * If ex_output is "all", all parameters are output.
+  * If ex_output is "all", all parameters are output.q
   """
 
 ```python
