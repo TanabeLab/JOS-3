@@ -78,15 +78,13 @@ model.BMR
 
 # Example 2
 
-Build model and set body built
+Step 1: Build model and set body built
 -------
 
 As a first step, you need to build a model and set a body built that you want to simulate.
 
 The following are the parameters for JOS3 class.
-
-Parameters of body built:
-
+-------
 * height (float, optional) : Body height [m]. The default is 1.72.
 * weight (float, optional) : Body weight [kg]. The default is 74.43.
 * fat (float, optional) : Fat percentage [%]. The default is 15.
@@ -99,10 +97,9 @@ Parameters of body built:
   * You can choose "dubois", "fujimoto", "kruazumi", "takahira".
 * ex_output (list/int, optional) : Extra output. The default is "None", 
   which outputs only important parameters such as local skin temperatures or core temperature. 
-  * If you want to get extra output parameters, set the parameters as the list format.
+  * Set the parameters as the list format.
     (for example, if you want to see the data of ) ["BFsk", "BFcr", "Tar"]. 
-  * If ex_output is "all", all parameters are output.q
-  """
+  * If you want to see ex_output is "all", all parameters are output.q
 
 ```python
 import jos3
@@ -119,6 +116,7 @@ model = jos3.JOS3(height=1.7,
                   bsa_equation="fujimoto",
                   ex_output=None
                   )
+```
 
 """
 2. Set environmental conditions
