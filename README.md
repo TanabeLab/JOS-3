@@ -55,7 +55,7 @@ import matplotlib.pyplot as plt
 
 As a first step, you need to build a model and set a body built that you want to simulate.
 
-### Parameters for JOS3 class are as follows:
+### Parameters for JOS3 class:
 
 * height (float, optional) : Body height [m]. The default is 1.72.
 * weight (float, optional) : Body weight [kg]. The default is 74.43.
@@ -98,11 +98,11 @@ alternate between entering environmental information and executing the simulate(
 After the simulate() method is executed, the environment input values are inherited, 
 so you only need to enter the input parameters that you want to change.
 
-### Environmental parameters for setter of JOS3 class.
+### Environmental parameters.
 
 Input parameters of environmental conditions are set as the Setter format.
 
-If you set the different conditions in each body parts, set the list.
+If you set the different conditions in each body parts, set them as a list-type object.
 
 List-type input must be 17 lengths and means the input of "Head", "Neck", "Chest", 
 "Back", "Pelvis", "Left-Shoulder", "Left-Arm", "Left-Hand", "Right-Shoulder", "Right-Arm",
@@ -226,7 +226,6 @@ Here is Getter parameters
 * Tms (numpy.ndarray (2,)) : Muscle temperatures of Head and Pelvis [oC]. 
 * Tfat (numpy.ndarray (2,)) : Fat temperatures of Head and Pelvis  [oC]. 
 * BMR (float) : Basal metabolic rate [W/m2].
-"""
 
 ```python
 # Check basal metabolic rate [W/m2] using Getters
