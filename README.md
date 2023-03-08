@@ -89,7 +89,8 @@ model = jos3.JOS3(height=1.7,
 
 Next, you need to set thermal environmental conditions that you want to simulate.
 
-If you want to simulate non-uniform thermal environment, use numpy.ndarray and input the data separately to local bodies.
+If you want to simulate non-uniform thermal environment, 
+use numpy.ndarray (or list-like data) and input the data separately to local bodies.
 You can also input a clothing insulation value for each body part individually as well as for the whole body.
 
 If you want to simulate transient thermal environment, 
@@ -116,45 +117,15 @@ List-type input must be 17 lengths and means the input of "Head", "Neck", "Chest
 * Icl (float or list) : Clothing insulation [clo].
 * PAR (float) Physical activity ratio [-]. The default is 1.2. 
   * This equals the ratio of metabolic rate to basal metabolic rate. 
+  * PAR is for calculation metabolic rate considering personal characteristics such as gender or age.
+  * If you want to input a specific value of metabolic rate like 58.2 W/m2, check the basal metabolic rate
+    for the simulated people using Getter (there is an example), and set PAR such that the metabolic rate is 58.2 W/m2. 
   * PAR of sitting quietly is 1.2.
 * posture (str) : posture [-]. The default is "standing".
   * choose posture from "standing", "sitting" or "lying". 
   * This parameter affects convective and radiant heat transfer coefficients for local body parts
 
-Getter
-JOS3 has some useful getters to check the current parameters.
-
-BSA : numpy.ndarray (17,)
-    Body surface areas by local body segments [m2].
-Rt : numpy.ndarray (17,)
-    Dry heat resistances between the skin and ambience areas by local body segments [K.m2/W].
-Ret : numpy.ndarray (17,)
-    Wet (Evaporative) heat resistances between the skin and ambience areas by local body segments [Pa.m2/W].
-Wet : numpy.ndarray (17,)
-    Skin wettedness on local body segments [-].
-WetMean : float
-    Mean skin wettedness of the whole body [-].
-TskMean : float
-    Mean skin temperature of the whole body [oC].
-Tsk : numpy.ndarray (17,)
-    Skin temperatures by the local body segments [oC].
-Tcr : numpy.ndarray (17,)
-    Skin temperatures by the local body segments [oC].
-Tcb : numpy.ndarray (1,)
-    Core temperatures by the local body segments [oC].
-Tar : numpy.ndarray (17,)
-    Arterial temperatures by the local body segments [oC].
-Tve : numpy.ndarray (17,)
-    Vein temperatures by the local body segments [oC].
-Tsve : numpy.ndarray (12,)
-    Superfical vein temperatures by the local body segments [oC].
-Tms : numpy.ndarray (2,)
-    Muscle temperatures of Head and Pelvis [oC].
-Tfat : numpy.ndarray (2,)
-    Fat temperatures of Head and Pelvis  [oC].
-BMR : float
-    Basal metabolic rate [W/m2].
-"""
+Here is an example code to simulate non-uniform and transient conditions.
 
 ```python
 # Set the first condition
@@ -226,12 +197,40 @@ model.simulate(times=30, # Number of loops of a simulation
 df = pd.DataFrame(model.dict_results())  # Make pandas.DataFrame
 df.TskMean.plot()  # Plot time series of mean skin temperature.
 plt.show('example2.png') # Show the plot
-
+```
+```python
 # Exporting the results as csv
 model.to_csv('example2.csv')
 
 # Show the documentaion of the output parameters
 print(jos3.show_outparam_docs())
+```
+
+# Getter
+JOS3 has some useful getters to check the current parameters.
+
+Here is Getter parameters
+
+* BSA (numpy.ndarray (17,)) : Body surface areas by local body segments [m2]. 
+* Rt (numpy.ndarray (17,)) : Dry heat resistances between the skin and ambience areas by local body segments [K.m2/W].
+* Ret (numpy.ndarray (17,)) : Wet (Evaporative) heat resistances between the skin and ambience areas by local body segments [Pa.m2/W]. 
+* Wet (numpy.ndarray (17,)) : Skin wettedness on local body segments [-]. 
+* WetMean (float) : Mean skin wettedness of the whole body [-]. 
+* TskMean (float) : Mean skin temperature of the whole body [oC]. 
+* Tsk (numpy.ndarray (17,)) : Skin temperatures by the local body segments [oC]. 
+* Tcr (numpy.ndarray (17,)) : Core temperatures by the local body segments [oC]. 
+* Tcb (numpy.ndarray (1,)) : Central blood pool temperatures [oC]. 
+* Tar (numpy.ndarray (17,)) : Arterial temperatures by the local body segments [oC]. 
+* Tve (numpy.ndarray (17,)) : Vein temperatures by the local body segments [oC]. 
+* Tsve (numpy.ndarray (12,)) : Superfical vein temperatures by the local body segments [oC]. 
+* Tms (numpy.ndarray (2,)) : Muscle temperatures of Head and Pelvis [oC]. 
+* Tfat (numpy.ndarray (2,)) : Fat temperatures of Head and Pelvis  [oC]. 
+* BMR (float) : Basal metabolic rate [W/m2].
+"""
+
+```python
+# Check basal metabolic rate [W/m2] using Getters
+model.BMR
 ```
 
 # Contact
