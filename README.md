@@ -97,14 +97,15 @@ alternate between entering environmental information and executing the simulate(
 After the simulate() method is executed, the environment input values are inherited, 
 so you only need to enter the input parameters that you want to change.
 
-## Environmental parameters for setter of JOS3 class.
+### Environmental parameters for setter of JOS3 class.
 
 Input parameters of environmental conditions are set as the Setter format.
+
 If you set the different conditions in each body parts, set the list.
 
-### List-type input must be 17 lengths and means the input of "Head", "Neck", "Chest", 
-### "Back", "Pelvis", "Left-Shoulder", "Left-Arm", "Left-Hand", "Right-Shoulder", "Right-Arm",
-### "Right-Hand", "Left-Thigh", "Left-Leg", "Left-Foot", "Right-Thigh", "Right-Leg" and "Right-Foot".
+List-type input must be 17 lengths and means the input of "Head", "Neck", "Chest", 
+"Back", "Pelvis", "Left-Shoulder", "Left-Arm", "Left-Hand", "Right-Shoulder", "Right-Arm",
+"Right-Hand", "Left-Thigh", "Left-Leg", "Left-Foot", "Right-Thigh", "Right-Leg" and "Right-Foot".
 
 * Ta (float or list) : Air temperature [oC].
 * Tr (float or list) : Mean radiant temperature [oC].
@@ -113,11 +114,12 @@ If you set the different conditions in each body parts, set the list.
 * Va (float or list) : Air velocity [m/s].
 * RH (float or list) : Relative humidity [%].
 * Icl (float or list) : Clothing insulation [clo].
-* PAR (float) Physical activity ratio [-]. The default is 1.2.
-    This equals the ratio of metabolic rate to basal metabolic rate.
-    PAR of sitting quietly is 1.2.
-* posture (str) : Choose a posture from "standing", "sitting" or "lying". The default is "standing".
-    This parameter affects convective and radiant heat transfer coefficients for local body parts
+* PAR (float) Physical activity ratio [-]. The default is 1.2. 
+  * This equals the ratio of metabolic rate to basal metabolic rate. 
+  * PAR of sitting quietly is 1.2.
+* posture (str) : posture [-]. The default is "standing".
+  * choose posture from "standing", "sitting" or "lying". 
+  * This parameter affects convective and radiant heat transfer coefficients for local body parts
 
 Getter
 JOS3 has some useful getters to check the current parameters.
