@@ -42,8 +42,8 @@ pip install numpy
 
 # Example
 
-Step 0: Import packages
--------
+## Step 0: Import packages
+
 ```python
 import jos3
 import numpy as np
@@ -51,12 +51,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 ```
 
-Step 1: Build model and set body built
--------
+## Step 1: Build model and set body built
 
 As a first step, you need to build a model and set a body built that you want to simulate.
 
-Parameters for JOS3 class are as follows:
+### Parameters for JOS3 class are as follows:
 
 * height (float, optional) : Body height [m]. The default is 1.72.
 * weight (float, optional) : Body weight [kg]. The default is 74.43.
@@ -86,8 +85,7 @@ model = jos3.JOS3(height=1.7,
                   )
 ```
 
-Step 2: Set environmental conditions
--------
+## Step 2: Set environmental conditions
 
 Next, you need to set thermal environmental conditions that you want to simulate.
 
@@ -99,9 +97,7 @@ alternate between entering environmental information and executing the simulate(
 After the simulate() method is executed, the environment input values are inherited, 
 so you only need to enter the input parameters that you want to change.
 
-The following are the parameters for JOS3 class.
-
-Setter & Getter
+The following are the environmental parameters for setter of JOS3 class.
 
 Input parameters of environmental conditions are set as the Setter format.
 If you set the different conditions in each body parts, set the list.
@@ -109,30 +105,18 @@ List input must be 17 lengths and means the input of "Head", "Neck", "Chest",
 "Back", "Pelvis", "LShoulder", "LArm", "LHand", "RShoulder", "RArm",
 "RHand", "LThigh", "LLeg", "LFoot", "RThigh", "RLeg" and "RFoot".
 
-Ta : float or list
-    Air temperature [oC].
-Tr : float or list
-    Mean radiant temperature [oC].
-To : float or list
-    Operative temperature [oC].
-    This parameter can be input only when air temperature and mean radiant temperature are equal.
-Va : float or list
-    Air velocity [m/s].
-RH : float or list
-    Relative humidity [%].
-Icl : float or list
-    Clothing insulation [clo].
-PAR : float
-    Physical activity ratio [-].
+* Ta (float or list) : Air temperature [oC].
+* Tr (float or list) : Mean radiant temperature [oC].
+* To (float or list) : Operative temperature [oC]. 
+  This parameter can be input only when air temperature and mean radiant temperature are equal.
+* Va (float or list) : Air velocity [m/s].
+* RH (float or list) : Relative humidity [%].
+* Icl (float or list) : Clothing insulation [clo].
+* PAR (float) Physical activity ratio [-]. The default is 1.2.
     This equals the ratio of metabolic rate to basal metabolic rate.
     PAR of sitting quietly is 1.2.
-    The default is 1.2.
-posture : str
-    Choose a posture from "standing", "sitting" or "lying". 
+* posture (str) : Choose a posture from "standing", "sitting" or "lying". The default is "standing".
     This parameter affects convective and radiant heat transfer coefficients for local body parts
-    The default is "standing".
-bodytemp : numpy.ndarray (85,)
-    All segment temperatures of JOS-3
 
 Getter
 JOS3 has some useful getters to check the current parameters.
