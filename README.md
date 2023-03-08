@@ -88,9 +88,7 @@ The following are the parameters for JOS3 class.
 Parameters of body built:
 
 * height (float, optional) : Body height [m]. The default is 1.72.
-
 * weight (float, optional) : Body weight [kg]. The default is 74.43.
-
 * fat (float, optional) : Fat percentage [%]. The default is 15.
 
 * age (int, optional) : Age [years]. The default is 20.
