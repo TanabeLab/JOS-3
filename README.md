@@ -74,6 +74,7 @@ As a first step, you need to build a model and set a body built that you want to
   * If you want to see the all outputs, set ex_output to "all".
 
 ### Example code to built a model and set body buit
+
 ```python
 model = jos3.JOS3(height=1.7,
                   weight=60,
@@ -195,12 +196,22 @@ model.Tr = 35  # Change mean radiant temperature [oC]
 model.simulate(times=30, # Number of loops of a simulation
                dtime=60, # Time delta [sec]. The default is 60.
                ) # Additional exposure time = 30 [loops] * 60 [sec] = 30 [min]
+```
 
+# Step 3: How to output
+
+As explained above, output parameters can be added arbitrarily by setting ex_output in list format when creating JOS objects.
+The output parameters are suffixed with "Head," "Neck," "Chest," etc. for each body part.
+
+```python
 # Show the results
 df = pd.DataFrame(model.dict_results())  # Make pandas.DataFrame
 df.TskMean.plot()  # Plot time series of mean skin temperature.
 plt.show('example2.png') # Show the plot
 ```
+
+![result](https://raw.githubusercontent.com/TanabeLab/JOS-3/master/example/ex_result.png)
+
 ```python
 # Exporting the results as csv
 model.to_csv('example2.csv')
