@@ -228,10 +228,65 @@ plt.show('example.png') # Show the plot
 
 ![result](https://raw.githubusercontent.com/TanabeLab/JOS-3/master/example/example.png)
 
+
 ```python
 # Exporte the results as csv
 model.to_csv('example.csv')
+```
 
+### Extra output parameters
+
+* Age     : Age [years]
+* BFava_foot: AVA blood flow rate of one foot [L/h]
+* BFava_hand: AVA blood flow rate of one hand [L/h]
+* BFcr    : Core blood flow rate of the body part [L/h]
+* BFfat   : Fat blood flow rate of the body part [L/h]
+* BFms    : Muscle blood flow rate of the body part [L/h]
+* BFsk    : Skin blood flow rate of the body part [L/h]
+* BSA     : Body surface area of the body part [m2]
+* Emax    : Maximum evaporative heat loss at the skin of th body part [W]
+* Esk     : Evaporative heat loss at the skin of the body part [W]
+* Esweat  : Evaporative heat loss at the skin by only sweating of the body part [W]
+* Fat     : Body fat rate [%]
+* Height  : Body heigh [m]
+* Icl     : Clothing insulation value of the body part [clo]
+* LHLsk   : Latent heat loss at the skin of the body part [W]
+* Mbasecr : Core heat production by basal metaborism of th body part [W]
+* Mbasefat: Fat heat production by basal metaborism of th body part [W]
+* Mbasems : Muscle heat production by basal metaborism of th body part [W]
+* Mbasesk : Skin heat production by basal metaborism of th body part [W]
+* Mnst    : Core heat production by non-shivering of the body part [W]
+* Mshiv   : Core or muscle heat production by shivering of th body part [W]
+* Mwork   : Core or muscle heat production by work of the body part [W]
+* Name    : Name of the model [-]
+* PAR     : Physical activity ratio [-]
+* Qcr     : Core total heat production of the body part [W]
+* Qfat    : Fat total heat production of the body part [W]
+* Qms     : Muscle total heat production of the body part [W]
+* Qsk     : Skin total heat production of the body part [W]
+* RESlh   : Latent heat loss by respiration of the body part [W]
+* RESsh   : Sensible heat loss by respiration of the body part [W]
+* RH      : Relative humidity of the body part [%]
+* Ret     : Total evaporative heat resistance of the body part [m2.kPa/W]
+* Rt      : Total heat resistance of the body part [m2.K/W]
+* SHLsk   : Sensible heat loss at the skin of the body part [W]
+* Setptcr : Set point skin temperatre of the body part [oC]
+* Setptsk : Set point core temperatre of the body part [oC]
+* Sex     : Male or female [-]
+* Ta      : Air temperature of the body part [oC]
+* Tar     : Arterial temperature of the body part [oC]
+* Tcb     : Central blood temperature [oC]
+* Tfat    : Fat temperature of the body part [oC]
+* Tms     : Muscle temperature as the body part [oC]
+* To      : Operative temperature of the body part [oC]
+* Tr      : Mean radiant temperature of the body part [oC]
+* Tsve    : Superfical vein temperature of the body part [oC]
+* Tve     : Vein temperature of the body part [oC]
+* Va      : Air velocity of the body part [m/s]
+* Weight  : Body weight [kg]
+
+### Example code to check the output parameters
+```python
 # Show the documentaion of the output parameters
 print(jos3.show_outparam_docs())
 ```
