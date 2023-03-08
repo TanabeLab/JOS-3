@@ -226,7 +226,7 @@ df.TskMean.plot()  # Plot time series of mean skin temperature.
 plt.show('example.png') # Show the plot
 ```
 
-![result](https://raw.githubusercontent.com/TanabeLab/JOS-3/master/example/example.png)
+![result](https://raw.githubusercontent.com/TanabeLab/JOS-3/Akihisa_2023-03-07/example/example.png)
 
 
 ```python
