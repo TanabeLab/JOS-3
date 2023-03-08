@@ -223,7 +223,7 @@ print(jos3.show_outparam_docs())
 # Getter
 JOS3 has some useful getters to check the current parameters.
 
-Here is Getter parameters
+## Getter parameters
 
 * BSA (numpy.ndarray (17,)) : Body surface areas by local body segments [m2]. 
 * Rt (numpy.ndarray (17,)) : Dry heat resistances between the skin and ambience areas by local body segments [K.m2/W].
@@ -240,6 +240,8 @@ Here is Getter parameters
 * Tms (numpy.ndarray (2,)) : Muscle temperatures of Head and Pelvis [oC]. 
 * Tfat (numpy.ndarray (2,)) : Fat temperatures of Head and Pelvis  [oC]. 
 * BMR (float) : Basal metabolic rate [W/m2].
+
+## Example code
 
 ```python
 # Check basal metabolic rate [W/m2] using Getters
