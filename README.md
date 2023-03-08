@@ -97,13 +97,14 @@ alternate between entering environmental information and executing the simulate(
 After the simulate() method is executed, the environment input values are inherited, 
 so you only need to enter the input parameters that you want to change.
 
-The following are the environmental parameters for setter of JOS3 class.
+## Environmental parameters for setter of JOS3 class.
 
 Input parameters of environmental conditions are set as the Setter format.
 If you set the different conditions in each body parts, set the list.
-List input must be 17 lengths and means the input of "Head", "Neck", "Chest",
-"Back", "Pelvis", "LShoulder", "LArm", "LHand", "RShoulder", "RArm",
-"RHand", "LThigh", "LLeg", "LFoot", "RThigh", "RLeg" and "RFoot".
+
+### List-type input must be 17 lengths and means the input of "Head", "Neck", "Chest", 
+### "Back", "Pelvis", "Left-Shoulder", "Left-Arm", "Left-Hand", "Right-Shoulder", "Right-Arm",
+### "Right-Hand", "Left-Thigh", "Left-Leg", "Left-Foot", "Right-Thigh", "Right-Leg" and "Right-Foot".
 
 * Ta (float or list) : Air temperature [oC].
 * Tr (float or list) : Mean radiant temperature [oC].
@@ -229,42 +230,6 @@ model.to_csv('example2.csv')
 
 # Show the documentaion of the output parameters
 print(jos3.show_outparam_docs())
-```
-
-# Example 1
-
-```python
-import jos3
-
-model = jos3.JOS3(height=1.7, weight=60, age=30)  # Builds a model
-
-# Set the first condition
-model.To = 28  # Operative temperature [oC]
-model.RH = 40  # Relative humidity [%]
-model.Va = 0.2  # Air velocity [m/s]
-model.PAR = 1.2  # Physical activity ratio [-]
-model.simulate(60)  # Exposre time = 60 [min]
-
-# Set the next condition
-model.To = 20  # Changes only operative temperature
-model.simulate(60)  # Additional exposre time = 60 [min]
-
-# Show the results
-import pandas as pd
-df = pd.DataFrame(model.dict_results())  # Make pandas.DataFrame
-df.TskMean.plot()  # Show the graph of mean skin temp.
-```
-![result](https://raw.githubusercontent.com/TanabeLab/JOS-3/master/example/ex_result.png)
-
-```python
-# Exporting the results as csv
-model.to_csv(folder="C:/Users/takahashi/Desktop")
-
-# Show the documentaion of the output parameters
-print(jos3.show_outparam_docs())
-
-# Check basal metabolic rate [W/m2] using Getters
-model.BMR
 ```
 
 # Contact
