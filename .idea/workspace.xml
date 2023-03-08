@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6efa365c-8d67-44e7-8d07-efd50a6f4b2e" name="Changes" comment="deleated text &quot;test&quot;.">
+    <list default="true" id="6efa365c-8d67-44e7-8d07-efd50a6f4b2e" name="Changes" comment="modified the README.md.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/example_v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/example/example_v2.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -17,7 +18,17 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/example/example2.csv" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/example/example_v2.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/jos3/jos3.py" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -28,18 +39,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/monyo/PycharmProjects/TanabeLab/JOS-3/example&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   },
-  "keyToStringList": {
-    "ChangesTree.GroupingKeys": [
+  &quot;keyToStringList&quot;: {
+    &quot;ChangesTree.GroupingKeys&quot;: [
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager">
-    <configuration name="example_v2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="example_v2" type="PythonConfigurationType" factoryName="Python">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -53,18 +66,13 @@
       <module name="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/example/example_v2.py" />
       <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
       <option name="REDIRECT_INPUT" value="false" />
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Python.example_v2" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -110,7 +118,259 @@
       <option name="project" value="LOCAL" />
       <updated>1678225197165</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="modification">
+      <created>1678226035820</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1678226035820</updated>
+    </task>
+    <task id="LOCAL-00007" summary="added example code 2 in ReadMe file.">
+      <created>1678226288756</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1678226288756</updated>
+    </task>
+    <task id="LOCAL-00008" summary="modified example code 2 in ReadMe file.">
+      <created>1678226556553</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1678226556553</updated>
+    </task>
+    <task id="LOCAL-00009" summary="modified example code 2 in ReadMe file.">
+      <created>1678226596283</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1678226596283</updated>
+    </task>
+    <task id="LOCAL-00010" summary="modified example code 2 in ReadMe file.">
+      <created>1678226660566</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1678226660566</updated>
+    </task>
+    <task id="LOCAL-00011" summary="modified example code 2 in ReadMe file.">
+      <created>1678226783289</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1678226783289</updated>
+    </task>
+    <task id="LOCAL-00012" summary="modified example code 2 in ReadMe file.">
+      <created>1678227559471</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1678227559471</updated>
+    </task>
+    <task id="LOCAL-00013" summary="modified example code 2 in ReadMe file.">
+      <created>1678227998095</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1678227998095</updated>
+    </task>
+    <task id="LOCAL-00014" summary="modified example code 2 in ReadMe file.">
+      <created>1678228273682</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1678228273682</updated>
+    </task>
+    <task id="LOCAL-00015" summary="modified the ReadMe file.">
+      <created>1678228708068</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1678228708068</updated>
+    </task>
+    <task id="LOCAL-00016" summary="modified the ReadMe file.">
+      <created>1678230498803</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1678230498803</updated>
+    </task>
+    <task id="LOCAL-00017" summary="modified the ReadMe file.">
+      <created>1678231146618</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1678231146618</updated>
+    </task>
+    <task id="LOCAL-00018" summary="modified the ReadMe file.">
+      <created>1678231180771</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1678231180771</updated>
+    </task>
+    <task id="LOCAL-00019" summary="modified the ReadMe file.">
+      <created>1678231746139</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1678231746139</updated>
+    </task>
+    <task id="LOCAL-00020" summary="modified the ReadMe file.">
+      <created>1678234000768</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1678234000768</updated>
+    </task>
+    <task id="LOCAL-00021" summary="modified the ReadMe file.">
+      <created>1678234045721</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1678234045721</updated>
+    </task>
+    <task id="LOCAL-00022" summary="modified the ReadMe file.">
+      <created>1678234064009</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1678234064009</updated>
+    </task>
+    <task id="LOCAL-00023" summary="modified the ReadMe file.">
+      <created>1678234914780</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1678234914780</updated>
+    </task>
+    <task id="LOCAL-00024" summary="modified the ReadMe file.">
+      <created>1678234928161</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1678234928161</updated>
+    </task>
+    <task id="LOCAL-00025" summary="modified the ReadMe file.">
+      <created>1678235357027</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1678235357027</updated>
+    </task>
+    <task id="LOCAL-00026" summary="modified the ReadMe file.">
+      <created>1678236823721</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1678236823721</updated>
+    </task>
+    <task id="LOCAL-00027" summary="modified the example_v2.py.">
+      <created>1678240477814</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1678240477814</updated>
+    </task>
+    <task id="LOCAL-00028" summary="modified the example_v2.py.">
+      <created>1678298678622</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1678298678622</updated>
+    </task>
+    <task id="LOCAL-00029" summary="modified the README.md.">
+      <created>1678298819359</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1678298819359</updated>
+    </task>
+    <task id="LOCAL-00030" summary="modified the README.md.">
+      <created>1678299430977</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1678299430977</updated>
+    </task>
+    <task id="LOCAL-00031" summary="modified the README.md.">
+      <created>1678299719036</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1678299719036</updated>
+    </task>
+    <task id="LOCAL-00032" summary="modified the README.md.">
+      <created>1678299874056</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1678299874056</updated>
+    </task>
+    <task id="LOCAL-00033" summary="modified the README.md.">
+      <created>1678301447612</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1678301447612</updated>
+    </task>
+    <task id="LOCAL-00034" summary="modified the README.md.">
+      <created>1678312798359</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1678312798359</updated>
+    </task>
+    <task id="LOCAL-00035" summary="modified the README.md.">
+      <created>1678313421894</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1678313421894</updated>
+    </task>
+    <task id="LOCAL-00036" summary="modified the README.md.">
+      <created>1678314065902</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1678314065902</updated>
+    </task>
+    <task id="LOCAL-00037" summary="modified the README.md.">
+      <created>1678314243602</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1678314243602</updated>
+    </task>
+    <task id="LOCAL-00038" summary="modified the README.md.">
+      <created>1678314317808</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1678314317808</updated>
+    </task>
+    <task id="LOCAL-00039" summary="modified the README.md.">
+      <created>1678314444417</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1678314444417</updated>
+    </task>
+    <task id="LOCAL-00040" summary="modified the README.md.">
+      <created>1678314538336</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1678314538336</updated>
+    </task>
+    <task id="LOCAL-00041" summary="modified the README.md.">
+      <created>1678315090912</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1678315090912</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -118,7 +378,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="Akihisa_2023-03-07" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -130,6 +402,12 @@
     <MESSAGE value="Added example code describing how to use JOS-3 model more detail." />
     <MESSAGE value="added text &quot;test&quot;." />
     <MESSAGE value="deleated text &quot;test&quot;." />
-    <option name="LAST_COMMIT_MESSAGE" value="deleated text &quot;test&quot;." />
+    <MESSAGE value="modification" />
+    <MESSAGE value="added example code 2 in ReadMe file." />
+    <MESSAGE value="modified example code 2 in ReadMe file." />
+    <MESSAGE value="modified the ReadMe file." />
+    <MESSAGE value="modified the example_v2.py." />
+    <MESSAGE value="modified the README.md." />
+    <option name="LAST_COMMIT_MESSAGE" value="modified the README.md." />
   </component>
 </project>
