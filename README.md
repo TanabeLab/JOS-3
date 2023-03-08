@@ -198,7 +198,7 @@ model.simulate(times=30, # Number of loops of a simulation
                ) # Additional exposure time = 30 [loops] * 60 [sec] = 30 [min]
 ```
 
-## Step 3: How to output
+## Step 3: Show and output results  
 
 As explained above, output parameters can be added arbitrarily by setting ex_output in list format when creating JOS objects.
 The output parameters are suffixed with "Head," "Neck," "Chest," etc. for each body part.
@@ -219,6 +219,8 @@ The output parameters are suffixed with "Head," "Neck," "Chest," etc. for each b
 * Wle     : Weight loss rate by the evaporation and respiration of the whole body [g/sec]
 * dt      : Time delta of the model [sec]
 
+### Show results
+
 ```python
 # Show the results
 df = pd.DataFrame(model.dict_results())  # Make pandas.DataFrame
@@ -227,7 +229,6 @@ plt.show('example.png') # Show the plot
 ```
 
 ![result](https://raw.githubusercontent.com/TanabeLab/JOS-3/Akihisa_2023-03-07/example/example.png)
-
 
 ```python
 # Exporte the results as csv
