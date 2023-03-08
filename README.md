@@ -220,7 +220,6 @@ The output parameters are suffixed with "Head," "Neck," "Chest," etc. for each b
 * dt      : Time delta of the model [sec]
 
 ### Show results
-
 ```python
 # Show the results
 df = pd.DataFrame(model.dict_results())  # Make pandas.DataFrame
@@ -230,6 +229,7 @@ plt.show('example.png') # Show the plot
 
 ![result](https://raw.githubusercontent.com/TanabeLab/JOS-3/Akihisa_2023-03-07/example/example.png)
 
+### Export results as csv file
 ```python
 # Exporte the results as csv
 model.to_csv('example.csv')
