@@ -203,21 +203,21 @@ model.simulate(times=30, # Number of loops of a simulation
 As explained above, output parameters can be added arbitrarily by setting ex_output in list format when creating JOS objects.
 The output parameters are suffixed with "Head," "Neck," "Chest," etc. for each body part.
 
-  Defalt output parameters
-  -------
-  CO      : Cardiac output (the sum of the whole blood flow) [L/h]
-  CycleTime: The counts of executing one cycle calculation [-]
-  Met     : Total heat production of the whole body [W]
-  ModTime : Simulation times [sec]
-  RES     : Heat loss by the respiration [W]
-  THLsk   : Heat loss from the skin of the body part [W]
-  Tcr     : Core temperature of the body part [oC]
-  Tsk     : Skin temperature of the body part [oC]
-  TskMean : Mean skin temperature of the body [oC]
-  Wet     : Local skin wettedness of the body part [-]
-  WetMean : Mean skin wettedness of the body [-]
-  Wle     : Weight loss rate by the evaporation and respiration of the whole body [g/sec]
-  dt      : Time delta of the model [sec]
+### Defalt output parameters
+
+* CO      : Cardiac output (the sum of the whole blood flow) [L/h]
+* CycleTime: The counts of executing one cycle calculation [-]
+* Met     : Total heat production of the whole body [W]
+* ModTime : Simulation times [sec]
+* RES     : Heat loss by the respiration [W]
+* THLsk   : Heat loss from the skin of the body part [W]
+* Tcr     : Core temperature of the body part [oC]
+* Tsk     : Skin temperature of the body part [oC]
+* TskMean : Mean skin temperature of the body [oC]
+* Wet     : Local skin wettedness of the body part [-]
+* WetMean : Mean skin wettedness of the body [-]
+* Wle     : Weight loss rate by the evaporation and respiration of the whole body [g/sec]
+* dt      : Time delta of the model [sec]
 
 ```python
 # Show the results
