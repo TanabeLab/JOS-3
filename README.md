@@ -83,8 +83,8 @@ Step 1: Build model and set body built
 
 As a first step, you need to build a model and set a body built that you want to simulate.
 
-The following are the parameters for JOS3 class.
--------
+Parameters for JOS3 class are as follows:
+
 * height (float, optional) : Body height [m]. The default is 1.72.
 * weight (float, optional) : Body weight [kg]. The default is 74.43.
 * fat (float, optional) : Fat percentage [%]. The default is 15.
@@ -99,7 +99,7 @@ The following are the parameters for JOS3 class.
   which outputs only important parameters such as local skin temperatures or core temperature. 
   * Set the parameters as the list format.
     (for example, if you want to see the data of ) ["BFsk", "BFcr", "Tar"]. 
-  * If you want to see ex_output is "all", all parameters are output.q
+  * If you want to see the all outputs, set ex_output to "all".
 
 ```python
 import jos3
@@ -114,12 +114,12 @@ model = jos3.JOS3(height=1.7,
                   sex="male",
                   bmr_equation="japanese",
                   bsa_equation="fujimoto",
-                  ex_output=None
+                  ex_output="all"
                   )
 ```
 
-"""
-2. Set environmental conditions
+Step 2: Set environmental conditions
+-------
 
 Next, you need to set thermal environmental conditions that you want to simulate.
 
@@ -134,9 +134,9 @@ so you only need to enter the input parameters that you want to change.
 The following are the parameters for JOS3 class.
 
 Setter & Getter
--------
+
 Input parameters of environmental conditions are set as the Setter format.
-If you set the different conditons in each body parts, set the list.
+If you set the different conditions in each body parts, set the list.
 List input must be 17 lengths and means the input of "Head", "Neck", "Chest",
 "Back", "Pelvis", "LShoulder", "LArm", "LHand", "RShoulder", "RArm",
 "RHand", "LThigh", "LLeg", "LFoot", "RThigh", "RLeg" and "RFoot".
@@ -167,7 +167,6 @@ bodytemp : numpy.ndarray (85,)
     All segment temperatures of JOS-3
 
 Getter
--------
 JOS3 has some useful getters to check the current parameters.
 
 BSA : numpy.ndarray (17,)
@@ -202,6 +201,7 @@ BMR : float
     Basal metabolic rate [W/m2].
 """
 
+```python
 # Set the first condition
 model.Ta = 28  # Air temperature [oC]
 model.Tr = 30  # Mean radiant temperature [oC]
