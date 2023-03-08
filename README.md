@@ -73,6 +73,7 @@ As a first step, you need to build a model and set a body built that you want to
     (for example, if you want to see the data of ) ["BFsk", "BFcr", "Tar"]. 
   * If you want to see the all outputs, set ex_output to "all".
 
+### Example code to built a model and set body buit
 ```python
 model = jos3.JOS3(height=1.7,
                   weight=60,
@@ -98,7 +99,7 @@ alternate between entering environmental information and executing the simulate(
 After the simulate() method is executed, the environment input values are inherited, 
 so you only need to enter the input parameters that you want to change.
 
-### Environmental parameters.
+### Environmental parameters
 
 Input parameters of environmental conditions are set as the Setter format.
 
@@ -115,18 +116,20 @@ List-type input must be 17 lengths and means the input of "Head", "Neck", "Chest
 * Va (float or list) : Air velocity [m/s].
 * RH (float or list) : Relative humidity [%].
 * Icl (float or list) : Clothing insulation [clo].
+  * [Reference for clothing insulation for the whole body](https://pythermalcomfort.readthedocs.io/en/latest/reference/pythermalcomfort.html#clothing-insulation-of-typical-ensembles-clo)
+  * Reference for local clothing insulation: [A.Nomoto et al. (2019)](https://onlinelibrary.wiley.com/doi/full/10.1002/2475-8876.12124)
 * PAR (float) Physical activity ratio [-]. The default is 1.2. 
   * This equals the ratio of metabolic rate to basal metabolic rate. 
   * PAR is for calculation metabolic rate considering personal characteristics such as gender or age.
   * If you want to input a specific value of metabolic rate like 58.2 W/m2, check the basal metabolic rate
-    for the simulated people using Getter (there is an example), and set PAR such that the metabolic rate is 58.2 W/m2. 
+    for the simulated people using Getter (there is an example at the bottom of this document), 
+    and set PAR such that the metabolic rate is 58.2 W/m2. 
   * PAR of sitting quietly is 1.2.
 * posture (str) : posture [-]. The default is "standing".
   * choose posture from "standing", "sitting" or "lying". 
   * This parameter affects convective and radiant heat transfer coefficients for local body parts
 
-Here is an example code to simulate non-uniform and transient conditions.
-
+### Example code to simulate non-uniform and transient conditions
 ```python
 # Set the first condition
 model.Ta = 28  # Air temperature [oC]
