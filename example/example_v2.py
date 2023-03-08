@@ -202,11 +202,11 @@ df = pd.DataFrame(model.dict_results())  # Make pandas.DataFrame
 df.TskMean.plot()  # Plot time series of mean skin temperature.
 plt.ylabel('Mean skin temperature [oC]') # Set y-label as 'Mean skin temperature [oC]'
 plt.xlabel('Time [min]') # Set x-label as 'Time [min]'
-plt.savefig('example2.png') # Save plot at the same directory
+plt.savefig('example.png') # Save plot at the same directory
 plt.show() # Show the plot
 
 # Exporting the results as csv
-model.to_csv('example2.csv')
+model.to_csv('example.csv')
 
 # Show the documentaion of the output parameters
 print(jos3.show_outparam_docs())
