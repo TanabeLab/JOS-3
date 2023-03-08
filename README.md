@@ -207,14 +207,14 @@ The output parameters are suffixed with "Head," "Neck," "Chest," etc. for each b
 # Show the results
 df = pd.DataFrame(model.dict_results())  # Make pandas.DataFrame
 df.TskMean.plot()  # Plot time series of mean skin temperature.
-plt.show('example2.png') # Show the plot
+plt.show('example.png') # Show the plot
 ```
 
-![result](https://raw.githubusercontent.com/TanabeLab/JOS-3/master/example/ex_result.png)
+![result](https://raw.githubusercontent.com/TanabeLab/JOS-3/master/example/example.png)
 
 ```python
-# Exporting the results as csv
-model.to_csv('example2.csv')
+# Exporte the results as csv
+model.to_csv('example.csv')
 
 # Show the documentaion of the output parameters
 print(jos3.show_outparam_docs())
