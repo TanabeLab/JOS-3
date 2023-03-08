@@ -197,6 +197,7 @@ model.simulate(times=30, # Number of loops of a simulation
                ) # Additional exposure time = 30 [loops] * 60 [sec] = 30 [min]
 
 # Show the results
+print(model.dict_results())
 df = pd.DataFrame(model.dict_results())  # Make pandas.DataFrame
 df.TskMean.plot()  # Plot time series of mean skin temperature.
 plt.show('example2.png') # Show the plot
