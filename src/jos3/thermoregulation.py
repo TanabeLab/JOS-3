@@ -467,8 +467,8 @@ def ava_bloodflow(err_cr, err_sk,
     err_msk = np.average(err_sk, weights=bsa)
 
     # Openbess of AVA [-]
-    sig_ava_hand = 0.265 * (err_bcr + 0.43) + 0.953 * (err_msk + 0.1905) + 0.9126
-    sig_ava_foot = 0.265 * (err_bcr - 0.97) + 0.953 * (err_msk - 0.0095) + 0.9126
+    sig_ava_hand = 0.265 * (err_msk + 0.43) + 0.953 * (err_bcr + 0.1905) + 0.9126
+    sig_ava_foot = 0.265 * (err_msk - 0.997) + 0.953 * (err_bcr + 0.0095) + 0.9126
 
     sig_ava_hand = min(sig_ava_hand, 1)
     sig_ava_hand = max(sig_ava_hand, 0)
