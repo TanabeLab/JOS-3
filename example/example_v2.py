@@ -37,6 +37,7 @@ ex_output : None, list or "all", optional
     If ex_output is "all", all parameters are output.
     The default is None, which outputs only important parameters such as local skin temperatures. 
 """
+
 model = jos3.JOS3(height=1.7,
                   weight=60,
                   fat=20,
@@ -44,7 +45,7 @@ model = jos3.JOS3(height=1.7,
                   sex="male",
                   bmr_equation="japanese",
                   bsa_equation="fujimoto",
-                  ex_output=None
+                  ex_output="all",
                   )
 
 """
@@ -60,7 +61,7 @@ alternate between entering environmental information and executing the simulate(
 After the simulate() method is executed, the environment input values are inherited, 
 so you only need to enter the input parameters that you want to change.
 
-The following are the parameters for JOS3 class.
+The following are the parameters for JOS-3 class.
 
 Setter & Getter
 -------
@@ -199,10 +200,13 @@ model.simulate(times=30, # Number of loops of a simulation
 # Show the results
 df = pd.DataFrame(model.dict_results())  # Make pandas.DataFrame
 df.TskMean.plot()  # Plot time series of mean skin temperature.
+plt.ylabel('Mean skin temperature [oC]') # Set y-label as 'Mean skin temperature [oC]'
+plt.xlabel('Time [min]') # Set x-label as 'Time [min]'
+plt.savefig('example.png') # Save plot at the same directory
 plt.show() # Show the plot
 
 # Exporting the results as csv
-model.to_csv('example2.csv')
+model.to_csv('example.csv')
 
 # Show the documentaion of the output parameters
 print(jos3.show_outparam_docs())
