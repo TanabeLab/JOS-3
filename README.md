@@ -20,7 +20,7 @@ F. Tartarini, S. Schiavon, pythermalcomfort: A Python package for thermal comfor
 doi: https://doi.org/10.1016/j.softx.2020.100578.
 
 ## Fix in version 0.5.0
-*AVA blood flow function was corrected from;
+* AVA blood flow function was corrected from;
 ```python
 sig_ava_hand = 0.265 * (err_bcr + 0.43) + 0.953 * (err_msk + 0.1905) + 0.9126
 sig_ava_foot = 0.265 * (err_bcr - 0.97) + 0.953 * (err_msk - 0.0095) + 0.9126
