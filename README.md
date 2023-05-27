@@ -1,22 +1,22 @@
 # Joint system thermoregulation model (JOS-3)
 
 [Joint system thermoregulation model (JOS-3)](https://www.sciencedirect.com/science/article/pii/S0378778820333612)
-is a numerical model to simulate human thermal physiology such as skin temperature, core temperature, 
+is a numerical model to simulate human thermal physiology such as skin temperature, core temperature,
 sweating rate, and so on at 17 local body parts as well as the whole body.
 
-This model was developed at [Shin-ichi Tanabe Laboratory, Waseda University](https://www.tanabe.arch.waseda.ac.jp/en/) 
-and was derived from [65 Multi-Node model](https://doi.org/10.1016/S0378-7788(02)00014-2) 
+This model was developed at [Shin-ichi Tanabe Laboratory, Waseda University](https://www.tanabe.arch.waseda.ac.jp/en/)
+and was derived from [65 Multi-Node model](https://doi.org/10.1016/S0378-7788(02)00014-2)
 and [JOS-2 model](https://doi.org/10.1016/j.buildenv.2013.04.013).
 
-Please cite us if you use this package and describe which version you used: 
+Please cite us if you use this package and describe which version you used:
 Y. Takahashi, A. Nomoto, S. Yoda, R. Hisayama, M. Ogata, Y. Ozeki, S. Tanabe,
-Thermoregulation Model JOS-3 with New Open Source Code, Energy & Buildings (2020), 
+Thermoregulation Model JOS-3 with New Open Source Code, Energy & Buildings (2020),
 doi: https://doi.org/10.1016/j.enbuild.2020.110575
 
 # Note
 
 Please also check [pythermalcomfort](https://github.com/CenterForTheBuiltEnvironment/pythermalcomfort) :
-F. Tartarini, S. Schiavon, pythermalcomfort: A Python package for thermal comfort research, SoftwareX (2020), 
+F. Tartarini, S. Schiavon, pythermalcomfort: A Python package for thermal comfort research, SoftwareX (2020),
 doi: https://doi.org/10.1016/j.softx.2020.100578.
 
 # Requirement
@@ -63,14 +63,14 @@ As a first step, you need to build a model and set a body built that you want to
 * age (int, optional) : Age [years]. The default is 20.
 * sex (str, optional) : Sex ("male" or "female"). The default is "male".
 * ci (float, optional) : Cardiac index [L/min/m2]. The default is 2.6432.
-* bmr_equation (str, optional) : BMR equation. The default is "harris-benedict". 
+* bmr_equation (str, optional) : BMR equation. The default is "harris-benedict".
   * To use the equation for Japanese, type "japanese".
 * bsa_equation (str, optional) : BSA equation. The default is "dubois".
   * You can choose "dubois", "fujimoto", "kruazumi", "takahira".
-* ex_output (list/int, optional) : Extra output. The default is "None", 
-  which outputs only important parameters such as local skin temperatures or core temperature. 
+* ex_output (list/int, optional) : Extra output. The default is "None",
+  which outputs only important parameters such as local skin temperatures or core temperature.
   * Set the parameters as the list format.
-    (for example, if you want to see the data of ) ["BFsk", "BFcr", "Tar"]. 
+    (for example, if you want to see the data of ) ["BFsk", "BFcr", "Tar"].
   * If you want to see the all outputs, set ex_output to "all".
 
 ### Example code to built a model and set body buit
@@ -91,13 +91,13 @@ model = jos3.JOS3(height=1.7,
 
 Next, you need to set thermal environmental conditions that you want to simulate.
 
-If you want to simulate non-uniform thermal environment, 
+If you want to simulate non-uniform thermal environment,
 use numpy.ndarray (or list-like data) and input the data separately to local bodies.
 You can also input a clothing insulation value for each body part individually as well as for the whole body.
 
-If you want to simulate transient thermal environment, 
+If you want to simulate transient thermal environment,
 alternate between entering environmental information and executing the simulate() method.
-After the simulate() method is executed, the environment input values are inherited, 
+After the simulate() method is executed, the environment input values are inherited,
 so you only need to enter the input parameters that you want to change.
 
 ### Environmental parameters
@@ -106,28 +106,28 @@ Input parameters of environmental conditions are set as the Setter format.
 
 If you set the different conditions in each body parts, set them as a list-type object.
 
-List-type input must be 17 lengths and means the input of "Head", "Neck", "Chest", 
+List-type input must be 17 lengths and means the input of "Head", "Neck", "Chest",
 "Back", "Pelvis", "Left-Shoulder", "Left-Arm", "Left-Hand", "Right-Shoulder", "Right-Arm",
 "Right-Hand", "Left-Thigh", "Left-Leg", "Left-Foot", "Right-Thigh", "Right-Leg" and "Right-Foot".
 
 * Ta (float or list) : Air temperature [oC].
 * Tr (float or list) : Mean radiant temperature [oC].
-* To (float or list) : Operative temperature [oC]. 
+* To (float or list) : Operative temperature [oC].
   This parameter can be input only when air temperature and mean radiant temperature are equal.
 * Va (float or list) : Air velocity [m/s].
 * RH (float or list) : Relative humidity [%].
 * Icl (float or list) : Clothing insulation [clo].
   * [Reference for clothing insulation for the whole body](https://pythermalcomfort.readthedocs.io/en/latest/reference/pythermalcomfort.html#clothing-insulation-of-typical-ensembles-clo)
   * Reference for local clothing insulation: [A.Nomoto et al. (2019)](https://onlinelibrary.wiley.com/doi/full/10.1002/2475-8876.12124)
-* PAR (float) Physical activity ratio [-]. The default is 1.2. 
-  * This equals the ratio of metabolic rate to basal metabolic rate. 
+* PAR (float) Physical activity ratio [-]. The default is 1.2.
+  * This equals the ratio of metabolic rate to basal metabolic rate.
   * PAR is for calculation metabolic rate considering personal characteristics such as gender or age.
   * If you want to input a specific value of metabolic rate like 58.2 W/m2, check the basal metabolic rate
-    for the simulated people using Getter (there is an example at the bottom of this document), 
-    and set PAR such that the metabolic rate is 58.2 W/m2. 
+    for the simulated people using Getter (there is an example at the bottom of this document),
+    and set PAR such that the metabolic rate is 58.2 W/m2.
   * PAR of sitting quietly is 1.2.
 * posture (str) : posture [-]. The default is "standing".
-  * choose posture from "standing", "sitting" or "lying". 
+  * choose posture from "standing", "sitting" or "lying".
   * This parameter affects convective and radiant heat transfer coefficients for local body parts
 
 ### Example code to simulate non-uniform and transient conditions
@@ -198,7 +198,7 @@ model.simulate(times=30, # Number of loops of a simulation
                ) # Additional exposure time = 30 [loops] * 60 [sec] = 30 [min]
 ```
 
-## Step 3: Show and output results  
+## Step 3: Show and output results
 
 As explained above, output parameters can be added arbitrarily by setting ex_output in list format when creating JOS objects.
 The output parameters are suffixed with "Head," "Neck," "Chest," etc. for each body part.
@@ -227,7 +227,7 @@ df.TskMean.plot()  # Plot time series of mean skin temperature.
 plt.show('example.png') # Show the plot
 ```
 
-![result](https://raw.githubusercontent.com/TanabeLab/JOS-3/Akihisa_2023-03-07/example/example.png)
+![result](https://raw.githubusercontent.com/TanabeLab/JOS-3/master/example/example.png)
 
 ### Export results as csv file
 ```python
@@ -297,20 +297,20 @@ JOS3 has some useful getters to check the current parameters.
 
 ### Getter parameters
 
-* BSA (numpy.ndarray (17,)) : Body surface areas by local body segments [m2]. 
+* BSA (numpy.ndarray (17,)) : Body surface areas by local body segments [m2].
 * Rt (numpy.ndarray (17,)) : Dry heat resistances between the skin and ambience areas by local body segments [K.m2/W].
-* Ret (numpy.ndarray (17,)) : Wet (Evaporative) heat resistances between the skin and ambience areas by local body segments [Pa.m2/W]. 
-* Wet (numpy.ndarray (17,)) : Skin wettedness on local body segments [-]. 
-* WetMean (float) : Mean skin wettedness of the whole body [-]. 
-* TskMean (float) : Mean skin temperature of the whole body [oC]. 
-* Tsk (numpy.ndarray (17,)) : Skin temperatures by the local body segments [oC]. 
-* Tcr (numpy.ndarray (17,)) : Core temperatures by the local body segments [oC]. 
-* Tcb (numpy.ndarray (1,)) : Central blood pool temperatures [oC]. 
-* Tar (numpy.ndarray (17,)) : Arterial temperatures by the local body segments [oC]. 
-* Tve (numpy.ndarray (17,)) : Vein temperatures by the local body segments [oC]. 
-* Tsve (numpy.ndarray (12,)) : Superfical vein temperatures by the local body segments [oC]. 
-* Tms (numpy.ndarray (2,)) : Muscle temperatures of Head and Pelvis [oC]. 
-* Tfat (numpy.ndarray (2,)) : Fat temperatures of Head and Pelvis  [oC]. 
+* Ret (numpy.ndarray (17,)) : Wet (Evaporative) heat resistances between the skin and ambience areas by local body segments [Pa.m2/W].
+* Wet (numpy.ndarray (17,)) : Skin wettedness on local body segments [-].
+* WetMean (float) : Mean skin wettedness of the whole body [-].
+* TskMean (float) : Mean skin temperature of the whole body [oC].
+* Tsk (numpy.ndarray (17,)) : Skin temperatures by the local body segments [oC].
+* Tcr (numpy.ndarray (17,)) : Core temperatures by the local body segments [oC].
+* Tcb (numpy.ndarray (1,)) : Central blood pool temperatures [oC].
+* Tar (numpy.ndarray (17,)) : Arterial temperatures by the local body segments [oC].
+* Tve (numpy.ndarray (17,)) : Vein temperatures by the local body segments [oC].
+* Tsve (numpy.ndarray (12,)) : Superfical vein temperatures by the local body segments [oC].
+* Tms (numpy.ndarray (2,)) : Muscle temperatures of Head and Pelvis [oC].
+* Tfat (numpy.ndarray (2,)) : Fat temperatures of Head and Pelvis  [oC].
 * BMR (float) : Basal metabolic rate [W/m2].
 
 ### Example code
