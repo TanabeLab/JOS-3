@@ -19,22 +19,20 @@ Please also check [pythermalcomfort](https://github.com/CenterForTheBuiltEnviron
 F. Tartarini, S. Schiavon, pythermalcomfort: A Python package for thermal comfort research, SoftwareX (2020),
 doi: https://doi.org/10.1016/j.softx.2020.100578.
 
-## Version 0.5.0
-
-AVA blood flow function was corrected from;
-```python
-sig_ava_hand = 0.265 * (err_msk + 0.43) + 0.953 * (err_bcr + 0.1905) + 0.9126
-sig_ava_foot = 0.265 * (err_msk - 0.997) + 0.953 * (err_bcr + 0.0095) + 0.9126
-```
-to;
+## Fix in version 0.5.0
+*AVA blood flow function was corrected from;
 ```python
 sig_ava_hand = 0.265 * (err_bcr + 0.43) + 0.953 * (err_msk + 0.1905) + 0.9126
 sig_ava_foot = 0.265 * (err_bcr - 0.97) + 0.953 * (err_msk - 0.0095) + 0.9126
 ```
+to;
+```python
+sig_ava_hand = 0.265 * (err_msk + 0.43) + 0.953 * (err_bcr + 0.1905) + 0.9126
+sig_ava_foot = 0.265 * (err_msk - 0.997) + 0.953 * (err_bcr + 0.0095) + 0.9126
+```
 
-## Version 0.4.0
-
-Pelvis capacity was corrected from 13.834 to 4.488.
+## Fix in version 0.4.0
+*Pelvis capacity was corrected from 13.834 to 4.488.
 
 
 # Requirement
