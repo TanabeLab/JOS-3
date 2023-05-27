@@ -32,7 +32,7 @@ sig_ava_foot = 0.265 * (err_msk - 0.997) + 0.953 * (err_bcr + 0.0095) + 0.9126
 ```
 
 ## Fix in version 0.4.0
-*Pelvis capacity was corrected from 13.834 to 4.488.
+* Pelvis capacity was corrected from 13.834 to 4.488.
 
 
 # Requirement
