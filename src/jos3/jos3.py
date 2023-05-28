@@ -339,8 +339,8 @@ class JOS3():
 
         # Operarive temp. [oC], heat and evaporative heat resistance [m2.K/W], [m2.kPa/W]
         to = threg.operative_temp(self._ta, self._tr, hc, hr,)
-        r_t = threg.dry_r(hc, hr, self._clo, self._atmospheric_pressure)
-        r_et = threg.wet_r(hc, self._clo, self._iclo, self._atmospheric_pressure)
+        r_t = threg.dry_r(hc, hr, self._clo, pt=self._atmospheric_pressure)
+        r_et = threg.wet_r(hc, self._clo, iclo=self._iclo, pt=self._atmospheric_pressure)
 
         #------------------------------------------------------------------
         # Thermoregulation
