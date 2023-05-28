@@ -50,7 +50,7 @@ class JOS3():
     ci : float, optional
         Cardiac index [L/min/m2]. The default is 2.6432.
     bmr_equation : str, optional
-        Choose a BMR equation. The default is "harris-benedict". 
+        Choose a BMR equation. The default is "harris-benedict".
         To use the equation for Japanese, enter "japanese".
     bsa_equation : str, optional
         Choose a BSA equation.
@@ -59,7 +59,7 @@ class JOS3():
     ex_output : None, list or "all", optional
         If you want to get extra output parameters, set the parameters as the list format like ["BFsk", "BFcr", "Tar"].
         If ex_output is "all", all parameters are output.
-        The default is None, which outputs only important parameters such as local skin temperatures. 
+        The default is None, which outputs only important parameters such as local skin temperatures.
 
 
     Setter & Getter
@@ -238,6 +238,7 @@ class JOS3():
         self._history = []
         self._t = dt.timedelta(0) # Elapsed time
         self._cycle = 0 # Cycle time
+        self._atmospheric_pressure = 101.33  # kPa. Used to fix the hc, he values
 
         # Reset setpoint temperature
         dictout = self._reset_setpt()
@@ -335,10 +336,11 @@ class JOS3():
         if self._hr is not None:
             hr = self._hr
 
+
         # Operarive temp. [oC], heat and evaporative heat resistance [m2.K/W], [m2.kPa/W]
         to = threg.operative_temp(self._ta, self._tr, hc, hr,)
-        r_t = threg.dry_r(hc, hr, self._clo)
-        r_et = threg.wet_r(hc, self._clo, self._iclo)
+        r_t = threg.dry_r(hc, hr, self._clo, pt=self._atmospheric_pressure)
+        r_et = threg.wet_r(hc, self._clo, iclo=self._iclo, pt=self._atmospheric_pressure)
 
         #------------------------------------------------------------------
         # Thermoregulation
@@ -1141,5 +1143,5 @@ def _to17array(inp):
         array = np.ones(17)*inp
     return array.copy()
 
-if __name__ is "__main__":
+if __name__ == "__main__":
     import jos3

@@ -22,7 +22,7 @@ _BSAst = np.array([
 def conv_coef(posture="standing", va=0.1, ta=28.8, tsk=34.0,):
     """
     Calculate convective heat transfer coefficient (hc) [W/K.m2]
-    
+
     Parameters
     ----------
     posture : str, optional
@@ -93,7 +93,7 @@ def conv_coef(posture="standing", va=0.1, ta=28.8, tsk=34.0,):
 def rad_coef(posture="standing"):
     """
     Calculate radiative heat transfer coefficient (hr) [W/K.m2]
-    
+
     Parameters
     ----------
     posture : str, optional
@@ -106,8 +106,8 @@ def rad_coef(posture="standing"):
         Radiative heat transfer coefficient (hr) [W/K.m2].
 
     """
-    
-    
+
+
     if posture.lower() == "standing":
         # Ichihara et al., 1997, https://doi.org/10.3130/aija.62.45_5
         hr = np.array([
@@ -158,7 +158,7 @@ def clo_area_factor(clo):
     return fcl
 
 
-def dry_r(hc, hr, clo):
+def dry_r(hc, hr, clo, pt=101.33):
     """
     Calculate total sensible thermal resistance.
 
@@ -170,6 +170,10 @@ def dry_r(hc, hr, clo):
         Radiative heat transfer coefficient (hr) [W/K.m2].
     clo : float or array
         Clothing insulation [clo].
+    pt : float
+        Local atmospheric pressure [kPa].
+        Corrected hc (hcc) is calculated as follows:
+            hcc = hc * ((pt / 101.33) ** 0.55)
 
     Returns
     -------
@@ -177,13 +181,14 @@ def dry_r(hc, hr, clo):
         Total sensible thermal resistance between skin and ambient.
     """
     fcl = clo_area_factor(clo)
-    r_a = 1/(hc+hr)
+    hcc = hc * ((pt / 101.33) ** 0.55)
+    r_a = 1/(hcc+hr)
     r_cl = 0.155*clo
     r_t = r_a/fcl + r_cl
     return r_t
 
 
-def wet_r(hc, clo, iclo=0.45, lewis_rate=16.5):
+def wet_r(hc, clo, iclo=0.45, lewis_rate=16.5, pt=101.33):
     """
     Calculate total evaporative thermal resistance.
 
@@ -197,6 +202,10 @@ def wet_r(hc, clo, iclo=0.45, lewis_rate=16.5):
         Clothin vapor permeation efficiency [-]. The default is 0.45.
     lewis_rate : float, optional
         Lewis rate [K/kPa]. The default is 16.5.
+    pt : float
+        Local atmospheric pressure [kPa].
+        Corrected he (hec) is calculated as follows:
+            hec = he * ((101.33 / pt) ** 0.45)
 
     Returns
     -------
@@ -206,7 +215,9 @@ def wet_r(hc, clo, iclo=0.45, lewis_rate=16.5):
     """
     fcl = clo_area_factor(clo)
     r_cl = 0.155 * clo
-    r_ea = 1 / (lewis_rate * hc)
+    he = hc * lewis_rate
+    hec = he * ((101.33 / pt) ** 0.45)
+    r_ea = 1 / hec
     r_ecl = r_cl / (lewis_rate * iclo)
     r_et = r_ea / fcl + r_ecl
     return r_et
@@ -255,11 +266,11 @@ def error_signals(err_cr=0, err_sk=0):
             0.0501, 0.0251, 0.0167, 0.0501, 0.0251, 0.0167,])
 
     # wrms signal
-    wrm = np.maximum(err_sk, 0) 
+    wrm = np.maximum(err_sk, 0)
     wrm *= receptor
-    wrms = wrm.sum() 
+    wrms = wrm.sum()
     # clds signal
-    cld = np.minimum(err_sk, 0) 
+    cld = np.minimum(err_sk, 0)
     cld *= -receptor
     clds = cld.sum()
 
@@ -272,7 +283,7 @@ antoine = lambda x: math.e**(16.6536-(4030.183/(x+235)))
 tetens = lambda x: 0.61078*10**(7.5*x/(x+237.3))
 
 
-def evaporation(err_cr, err_sk, tsk, ta, rh, ret, 
+def evaporation(err_cr, err_sk, tsk, ta, rh, ret,
                 height=1.72, weight=74.43, equation="dubois", age=20):
     """
     Calculate evaporative heat loss.
@@ -347,7 +358,7 @@ def evaporation(err_cr, err_sk, tsk, ta, rh, ret,
     return wet, e_sk, e_max, e_sweat
 
 
-def skin_bloodflow(err_cr, err_sk, 
+def skin_bloodflow(err_cr, err_sk,
         height=1.72, weight=74.43, equation="dubois", age=20, ci=2.59,):
     """
     Calculate skin blood flow rate (BFsk) [L/h].
@@ -413,16 +424,16 @@ def skin_bloodflow(err_cr, err_sk,
     #皮膚血流量 [L/h]
     bf_sk = (1 + skin_dilat * sd_dilat * sig_dilat) / \
             (1 + skin_stric * sd_stric * sig_stric) * bfb_sk * 2**(err_sk/6)
-    
+
     bfbr = cons.bfb_rate(height, weight, equation, age, ci,)
     bf_sk *= bfbr
     return bf_sk
 
 
-def ava_bloodflow(err_cr, err_sk, 
+def ava_bloodflow(err_cr, err_sk,
         height=1.72, weight=74.43, equation="dubois", age=20, ci=2.59,):
     """
-    Calculate areteriovenous anastmoses (AVA) blood flow rate [L/h] based on 
+    Calculate areteriovenous anastmoses (AVA) blood flow rate [L/h] based on
     Takemori's model, 1995.
 
     Parameters
@@ -456,8 +467,8 @@ def ava_bloodflow(err_cr, err_sk,
     err_msk = np.average(err_sk, weights=bsa)
 
     # Openbess of AVA [-]
-    sig_ava_hand = 0.265 * (err_bcr + 0.43) + 0.953 * (err_msk + 0.1905) + 0.9126
-    sig_ava_foot = 0.265 * (err_bcr - 0.97) + 0.953 * (err_msk - 0.0095) + 0.9126
+    sig_ava_hand = 0.265 * (err_msk + 0.43) + 0.953 * (err_bcr + 0.1905) + 0.9126
+    sig_ava_foot = 0.265 * (err_msk - 0.997) + 0.953 * (err_bcr + 0.0095) + 0.9126
 
     sig_ava_hand = min(sig_ava_hand, 1)
     sig_ava_hand = max(sig_ava_hand, 0)
@@ -604,7 +615,7 @@ def shivering(err_cr, err_sk, tcr, tsk,
               options={}):
     """
     Calculate local metabolic rate by shivering [W].
-    
+
     Parameters
     ----------
     err_cr, err_sk : array
@@ -630,7 +641,7 @@ def shivering(err_cr, err_sk, tcr, tsk,
     Mshiv : array
         Local metabolic rate by shivering [W].
 
-    """    
+    """
     wrms, clds = error_signals(err_cr, err_sk,)
     shivf = np.array([
             0.0339, 0.0436, 0.27394, 0.24102, 0.38754,
