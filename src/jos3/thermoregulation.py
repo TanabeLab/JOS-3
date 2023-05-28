@@ -158,7 +158,7 @@ def clo_area_factor(clo):
     return fcl
 
 
-def dry_r(hc, hr, clo, pt=103.55):
+def dry_r(hc, hr, clo, pt=101.33):
     """
     Calculate total sensible thermal resistance.
 
@@ -182,13 +182,13 @@ def dry_r(hc, hr, clo, pt=103.55):
     """
     fcl = clo_area_factor(clo)
     hcc = hc * ((pt / 101.33) ** 0.55)
-    r_a = 1/(hcc+hr)
+    r_a = 1/(hc+hcc)
     r_cl = 0.155*clo
     r_t = r_a/fcl + r_cl
     return r_t
 
 
-def wet_r(hc, clo, iclo=0.45, lewis_rate=16.5, pt=103.55):
+def wet_r(hc, clo, iclo=0.45, lewis_rate=16.5, pt=101.33):
     """
     Calculate total evaporative thermal resistance.
 
@@ -467,8 +467,8 @@ def ava_bloodflow(err_cr, err_sk,
     err_msk = np.average(err_sk, weights=bsa)
 
     # Openbess of AVA [-]
-    sig_ava_hand = 0.265 * (err_msk + 0.43) + 0.953 * (err_bcr + 0.1905) + 0.9126
-    sig_ava_foot = 0.265 * (err_msk - 0.997) + 0.953 * (err_bcr + 0.0095) + 0.9126
+    sig_ava_hand = 0.265 * (err_bcr + 0.43) + 0.953 * (err_msk + 0.1905) + 0.9126
+    sig_ava_foot = 0.265 * (err_bcr - 0.997) + 0.953 * (err_msk + 0.0095) + 0.9126
 
     sig_ava_hand = min(sig_ava_hand, 1)
     sig_ava_hand = max(sig_ava_hand, 0)
