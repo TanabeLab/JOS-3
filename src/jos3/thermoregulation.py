@@ -182,7 +182,7 @@ def dry_r(hc, hr, clo, pt=101.33):
     """
     fcl = clo_area_factor(clo)
     hcc = hc * ((pt / 101.33) ** 0.55)
-    r_a = 1/(hc+hcc)
+    r_a = 1/(hcc+hr)
     r_cl = 0.155*clo
     r_t = r_a/fcl + r_cl
     return r_t

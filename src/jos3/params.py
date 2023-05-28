@@ -355,9 +355,5 @@ def show_outparam_docs():
 
     return docs
 
-if __name__ is "__main__":
+if __name__ == "__main__":
     show_outparam_docs()
-
-
-
-

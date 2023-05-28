@@ -1143,5 +1143,5 @@ def _to17array(inp):
         array = np.ones(17)*inp
     return array.copy()
 
-if __name__ is "__main__":
+if __name__ == "__main__":
     import jos3
