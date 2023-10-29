@@ -19,6 +19,20 @@ Please also check [pythermalcomfort](https://github.com/CenterForTheBuiltEnviron
 F. Tartarini, S. Schiavon, pythermalcomfort: A Python package for thermal comfort research, SoftwareX (2020),
 doi: https://doi.org/10.1016/j.softx.2020.100578.
 
+## Mnshiv[i] in Equation (41)
+Mnshiv[i] in Equation (41) is not utilized in the python code.
+This is because non-shivering thermogenesis does not involve activity and may not lead to an increase in blood flow.
+The current code, line 854 in thermoregulation.py is below.
+```python
+for i, bn in enumerate(BODY_NAMES):
+    # If the segment has a muscle layer, muscle blood flow increases.
+    if not IDICT[bn]["muscle"] is None:
+        bf_ms[i] += (mwork[i] + mshiv[i])/1.163
+    # In other segments, core blood flow increase, instead of muscle blood flow.
+    else:
+        bf_cr[i] += (mwork[i] + mshiv[i])/1.163
+```
+
 ## Fix in version 0.5.0
 * AVA blood flow function was corrected from;
 ```python
